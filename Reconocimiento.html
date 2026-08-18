@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AsistenciaFace</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #estado {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <h1>AsistenciaFace</h1>
+
+    <p>
+      Sistema biométrico de control de asistencia
+    </p>
+
+    <button id="btnCamara">
+      📷 Activar cámara
+    </button>
+
+    <p id="estado">
+      Cámara desactivada
+    </p>
+
+    <video
+      id="video"
+      autoplay
+      muted
+      playsinline
+      style="
+        width:100%;
+        margin-top:20px;
+        border-radius:12px;
+        display:none;
+      ">
+    </video>
+
+  </div>
+
+<script>
+
+const boton =
+  document.getElementById('btnCamara');
+
+const video =
+  document.getElementById('video');
+
+const estado =
+  document.getElementById('estado');
+
+
+boton.addEventListener('click', async function () {
+
+  console.log('BOTÓN CÁMARA PRESIONADO');
+
+  estado.textContent =
+    'Solicitando permiso de cámara...';
+
+  try {
+
+    console.log(
+      'Solicitando getUserMedia...'
+    );
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false
+      });
+
+    console.log(
+      'CÁMARA OBTENIDA CORRECTAMENTE'
+    );
+
+    video.srcObject = stream;
+
+    video.style.display = 'block';
+
+    estado.textContent =
+      '✅ Cámara funcionando correctamente';
+
+  }
+
+  catch (error) {
+
+    console.error(
+      'ERROR CÁMARA:',
+      error
+    );
+
+    estado.textContent =
+      'ERROR: ' +
+      error.name +
+      ' - ' +
+      error.message;
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
