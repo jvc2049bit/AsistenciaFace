@@ -3,1002 +3,622 @@
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
-  <title>AsistenciaFace</title>
-
-
-  <!--
-  ==========================================
-  FACE-API.JS
-  ==========================================
-  -->
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js">
-  </script>
-
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-
-    body {
-
-      margin: 0;
-
-      min-height: 100vh;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      background:
-        linear-gradient(
-          135deg,
-          #eef2ff,
-          #f8fafc
-        );
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      padding: 20px;
-
-    }
-
-
-    .contenedor {
-
-      width: 100%;
-
-      max-width: 760px;
-
-      background: white;
-
-      border-radius: 22px;
-
-      padding: 25px;
-
-      box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.15);
-
-      text-align: center;
-
-    }
-
-
-    h1 {
-
-      margin:
-        0 0 5px 0;
-
-      color: #111827;
-
-    }
-
-
-    .subtitulo {
-
-      margin:
-        0 0 20px 0;
-
-      color: #6b7280;
-
-    }
-
-
-    #estado {
-
-      padding: 14px;
-
-      border-radius: 12px;
-
-      background: #f3f4f6;
-
-      color: #111827;
-
-      font-weight: bold;
-
-      margin-bottom: 20px;
-
-    }
-
-
-    #empleado {
-
-      font-size: 22px;
-
-      font-weight: bold;
-
-      color: #047857;
-
-      margin-bottom: 15px;
-
-    }
-
-
-    #zonaVideo {
-
-      position: relative;
-
-      width: 100%;
-
-      max-width: 640px;
-
-      margin: auto;
-
-      overflow: hidden;
-
-      border-radius: 18px;
-
-      background: #000;
-
-    }
-
-
-    #video {
-
-      width: 100%;
-
-      display: block;
-
-      transform:
-        scaleX(-1);
-
-    }
-
-
-    #canvas {
-
-      position: absolute;
-
-      top: 0;
-
-      left: 0;
-
-      width: 100%;
-
-      height: 100%;
-
-      transform:
-        scaleX(-1);
-
-    }
-
-
-    .botones {
-
-      margin-top: 20px;
-
-    }
-
-
-    button {
-
-      width: 100%;
-
-      padding: 15px;
-
-      border: none;
-
-      border-radius: 12px;
-
-      background: #2563eb;
-
-      color: white;
-
-      font-size: 18px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-    }
-
-
-    button:hover {
-
-      background: #1d4ed8;
-
-    }
-
-
-    button:disabled {
-
-      background: #9ca3af;
-
-      cursor: not-allowed;
-
-    }
-
-
-    #resultado {
-
-      margin-top: 20px;
-
-      font-size: 18px;
-
-      font-weight: bold;
-
-    }
-
-
-    .info {
-
-      margin-top: 20px;
-
-      padding: 15px;
-
-      background: #f9fafb;
-
-      border-radius: 12px;
-
-      text-align: left;
-
-      font-size: 14px;
-
-      color: #374151;
-
-    }
-
-
-    .fila {
-
-      margin-bottom: 8px;
-
-    }
-
-
-  </style>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AsistenciaFace</title>
+
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  text-align:center;
+}
+
+h1{
+  margin:10px 0 5px;
+}
+
+#estado{
+  font-size:18px;
+  font-weight:bold;
+  margin:15px auto;
+  max-width:700px;
+}
+
+#referencia{
+  margin:10px auto;
+  padding:10px;
+  background:#dcfce7;
+  color:#166534;
+  border-radius:10px;
+  max-width:500px;
+  font-weight:bold;
+}
+
+#contenedor{
+  position:relative;
+  width:640px;
+  max-width:95%;
+  margin:20px auto;
+}
+
+#video{
+  width:100%;
+  display:block;
+  border-radius:15px;
+  border:4px solid #2563eb;
+  background:#000;
+}
+
+#overlay{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+}
+
+#diagnostico{
+  background:#111827;
+  color:#fff;
+  padding:15px;
+  border-radius:12px;
+  max-width:640px;
+  margin:20px auto;
+  text-align:left;
+  font-family:monospace;
+  font-size:14px;
+  line-height:1.6;
+}
+
+button{
+  padding:14px 25px;
+  border:0;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+</style>
 
 </head>
 
 
 <body>
 
+<h1>AsistenciaFace</h1>
 
-<div class="contenedor">
+<p>Sistema biométrico de control de asistencia</p>
 
+<div id="referencia">
+  Cargando referencia facial...
+</div>
 
-  <h1>
-    AsistenciaFace
-  </h1>
+<div id="estado">
+  Inicializando sistema...
+</div>
 
+<div id="contenedor">
 
-  <p class="subtitulo">
-    Sistema biométrico de control de asistencia
-  </p>
+  <video
+    id="video"
+    autoplay
+    muted
+    playsinline>
+  </video>
 
+  <canvas id="overlay"></canvas>
 
-  <div id="estado">
-    Inicializando sistema...
-  </div>
+</div>
 
+<button id="btnCamara">
+  Iniciar cámara
+</button>
 
-  <div id="empleado">
-    Esperando reconocimiento...
-  </div>
+<div id="diagnostico">
 
-
-  <div id="zonaVideo">
-
-    <video
-      id="video"
-      autoplay
-      muted
-      playsinline>
-    </video>
-
-    <canvas id="canvas"></canvas>
-
-  </div>
-
-
-  <div class="botones">
-
-    <button
-      id="btnCamara">
-
-      📷 Iniciar cámara
-
-    </button>
-
-  </div>
-
-
-  <div id="resultado"></div>
-
-
-  <div class="info">
-
-    <div class="fila">
-      <strong>Estado:</strong>
-      <span id="infoEstado">
-        Preparando...
-      </span>
-    </div>
-
-    <div class="fila">
-      <strong>Empleado:</strong>
-      <span id="infoEmpleado">
-        —
-      </span>
-    </div>
-
-    <div class="fila">
-      <strong>GPS:</strong>
-      <span id="infoGPS">
-        Pendiente
-      </span>
-    </div>
-
-  </div>
-
+  INICIANDO DIAGNÓSTICO...
 
 </div>
 
 
 <script>
 
-
-/*
-==================================================
-CONFIGURACIÓN
-==================================================
-*/
+'use strict';
 
 
-const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbwSnVCHj2qiKd9JfCembdLIJ8bFuFYQBJ-2D4xE25i0PHhJKDdOuAdps4aa3a5-E9sy/exec';
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+const SCRIPT_URL =
+'https://script.google.com/macros/s/AKfycbzppnvBRB8GnlscSQXuDy4uDut1Ckv7o7CeP8QZkStbsS0cVoggFblq6j9nw_VzUcvr/exec';
+
+const CODIGO_EMPLEADO = 'EMP001';
+
+const UMBRAL = 0.60;
 
 
-const MODEL_URL =
-  'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js/weights';
-
-
-const UMBRAL =
-  0.60;
-
-
-/*
-==================================================
-ELEMENTOS
-==================================================
-*/
-
+/* =====================================================
+   ELEMENTOS
+===================================================== */
 
 const video =
-  document.getElementById(
-    'video'
-  );
-
+document.getElementById('video');
 
 const canvas =
-  document.getElementById(
-    'canvas'
-  );
-
+document.getElementById('overlay');
 
 const estado =
-  document.getElementById(
-    'estado'
-  );
+document.getElementById('estado');
+
+const referencia =
+document.getElementById('referencia');
+
+const diagnostico =
+document.getElementById('diagnostico');
+
+const btnCamara =
+document.getElementById('btnCamara');
 
 
-const empleado =
-  document.getElementById(
-    'empleado'
-  );
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let descriptorReferencia = null;
+
+let nombreEmpleado = '';
+
+let camaraActiva = false;
+
+let analizando = false;
+
+let registroRealizado = false;
+
+let ultimoRostro = 0;
 
 
-const resultado =
-  document.getElementById(
-    'resultado'
-  );
+/* =====================================================
+   DIAGNÓSTICO
+===================================================== */
+
+function log(mensaje){
+
+  console.log(mensaje);
+
+  diagnostico.innerHTML +=
+    '<br>' +
+    mensaje;
+
+}
 
 
-const boton =
-  document.getElementById(
-    'btnCamara'
-  );
+/* =====================================================
+   INICIO
+===================================================== */
 
+async function iniciarSistema(){
 
-const infoEstado =
-  document.getElementById(
-    'infoEstado'
-  );
+  try{
 
+    diagnostico.innerHTML =
+      'INICIANDO SISTEMA...';
 
-const infoEmpleado =
-  document.getElementById(
-    'infoEmpleado'
-  );
-
-
-const infoGPS =
-  document.getElementById(
-    'infoGPS'
-  );
-
-
-/*
-==================================================
-VARIABLES
-==================================================
-*/
-
-
-let descriptorReferencia =
-  null;
-
-
-let nombreEmpleado =
-  '';
-
-
-let codigoEmpleado =
-  '';
-
-
-let streamCamara =
-  null;
-
-
-let intervalo =
-  null;
-
-
-let reconocimientoConfirmado =
-  false;
-
-
-let tiempoReconocimiento =
-  null;
-
-
-/*
-==================================================
-INICIO
-==================================================
-*/
-
-
-window.addEventListener(
-  'load',
-  iniciarSistema
-);
-
-
-/*
-==================================================
-INICIAR SISTEMA
-==================================================
-*/
-
-
-async function iniciarSistema() {
-
-
-  try {
-
-
-    console.log(
-      '================================='
-    );
-
-
-    console.log(
-      'INICIANDO ASISTENCIA FACE'
-    );
-
-
-    estado.textContent =
-      'Cargando modelos de reconocimiento...';
-
-
-    infoEstado.textContent =
-      'Cargando modelos';
-
-
-    /*
-    ==========================================
-    MODELO 1
-    ==========================================
-    */
-
-
-    console.log(
+    log(
       'Cargando TinyFaceDetector...'
     );
 
-
     await faceapi.nets.tinyFaceDetector
       .loadFromUri(
-        MODEL_URL
+        'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights'
       );
 
-
-    console.log(
+    log(
       'TinyFaceDetector OK'
     );
 
 
-    /*
-    ==========================================
-    MODELO 2
-    ==========================================
-    */
-
-
-    console.log(
+    log(
       'Cargando FaceLandmark68...'
     );
 
-
     await faceapi.nets.faceLandmark68Net
       .loadFromUri(
-        MODEL_URL
+        'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights'
       );
 
-
-    console.log(
+    log(
       'FaceLandmark68 OK'
     );
 
 
-    /*
-    ==========================================
-    MODELO 3
-    ==========================================
-    */
-
-
-    console.log(
+    log(
       'Cargando FaceRecognition...'
     );
 
-
     await faceapi.nets.faceRecognitionNet
       .loadFromUri(
-        MODEL_URL
+        'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights'
       );
 
-
-    console.log(
+    log(
       'FaceRecognition OK'
     );
 
 
-    /*
-    ==========================================
-    OBTENER REFERENCIA
-    ==========================================
-    */
+    estado.textContent =
+      'Cargando referencia facial...';
+
+
+    await cargarReferencia();
 
 
     estado.textContent =
-      'Obteniendo fotografía de referencia...';
+      'Referencia cargada. Pulsa Iniciar cámara.';
 
 
-    infoEstado.textContent =
-      'Obteniendo referencia';
-
-
-    console.log(
-      'Solicitando fotografía a Apps Script...'
-    );
-
-
-    const referencia =
-      await obtenerReferencia();
-
-
-    console.log(
-      'Fotografía recibida'
-    );
-
-
-    codigoEmpleado =
-      referencia.codigo;
-
-
-    nombreEmpleado =
-      referencia.nombre;
-
-
-    infoEmpleado.textContent =
-      nombreEmpleado;
-
-
-    empleado.textContent =
-      'Empleado: ' +
-      nombreEmpleado;
-
-
-    /*
-    ==========================================
-    CREAR IMAGEN
-    ==========================================
-    */
-
-
-    const imagen =
-      await crearImagenDesdeBase64(
-        referencia.base64,
-        referencia.tipo
-      );
-
-
-    console.log(
-      'Imagen de referencia cargada'
-    );
-
-
-    /*
-    ==========================================
-    CREAR DESCRIPTOR
-    ==========================================
-    */
-
-
-    estado.textContent =
-      'Analizando fotografía de referencia...';
-
-
-    infoEstado.textContent =
-      'Creando descriptor facial';
-
-
-    const deteccion =
-      await faceapi
-        .detectSingleFace(
-          imagen,
-          new faceapi.TinyFaceDetectorOptions()
-        )
-        .withFaceLandmarks()
-        .withFaceDescriptor();
-
-
-    if (!deteccion) {
-
-      throw new Error(
-        'No se encontró un rostro en la fotografía de referencia.'
-      );
-
-    }
-
-
-    descriptorReferencia =
-      deteccion.descriptor;
-
-
-    console.log(
-      'Descriptor de referencia creado'
-    );
-
-
-    console.log(
-      'Dimensión:',
-      descriptorReferencia.length
-    );
-
-
-    estado.textContent =
-      'Sistema preparado. Pulsa Iniciar cámara.';
-
-
-    infoEstado.textContent =
-      'Sistema preparado';
-
-
-    boton.disabled =
-      false;
+    btnCamara.disabled = false;
 
 
   }
+  catch(error){
 
-
-  catch (error) {
-
-
-    console.error(
-      'ERROR INICIALIZANDO:',
-      error
-    );
-
+    console.error(error);
 
     estado.textContent =
       'ERROR: ' +
       error.message;
 
-
-    infoEstado.textContent =
-      'Error';
-
+    log(
+      'ERROR: ' +
+      error.message
+    );
 
   }
 
 }
 
 
-/*
-==================================================
-OBTENER FOTO DESDE APPS SCRIPT
-==================================================
-*/
+/* =====================================================
+   CARGAR REFERENCIA
+===================================================== */
+
+async function cargarReferencia(){
+
+  log(
+    'Solicitando fotografía a Apps Script...'
+  );
 
 
-function obtenerReferencia() {
+  const callback =
+    'referencia_' +
+    Date.now();
 
 
   return new Promise(
-    function(resolve, reject) {
-
-
-      const callback =
-        'referencia_' +
-        Date.now();
-
+    function(resolve,reject){
 
       window[callback] =
-        function(respuesta) {
+      function(respuesta){
 
+        try{
 
-          console.log(
-            'RESPUESTA REFERENCIA:',
-            respuesta
+          log(
+            'RESPUESTA REFERENCIA RECIBIDA'
           );
 
 
-          delete window[
-            callback
-          ];
-
-
-          if (
-            respuesta &&
-            respuesta.ok === false
-          ) {
-
-            reject(
-              new Error(
-                respuesta.error ||
-                'Apps Script devolvió un error.'
-              )
-            );
-
-            return;
-
-          }
-
-
-          if (
+          if(
             !respuesta ||
-            !respuesta.base64
-          ) {
+            respuesta.ok === false
+          ){
 
-            reject(
-              new Error(
-                'Apps Script no devolvió la fotografía.'
-              )
+            throw new Error(
+              respuesta &&
+              respuesta.error
+              ?
+              respuesta.error
+              :
+              'Apps Script no devolvió la referencia.'
             );
-
-            return;
 
           }
 
 
-          resolve(
-            respuesta
+          nombreEmpleado =
+            respuesta.nombre ||
+            CODIGO_EMPLEADO;
+
+
+          referencia.textContent =
+            'Referencia facial cargada: ' +
+            nombreEmpleado;
+
+
+          log(
+            'Empleado: ' +
+            nombreEmpleado
           );
 
 
-        };
+          if(!respuesta.base64){
+
+            throw new Error(
+              'No se recibió Base64.'
+            );
+
+          }
+
+
+          log(
+            'Base64 recibido: ' +
+            respuesta.base64.length +
+            ' caracteres'
+          );
+
+
+          const img =
+            new Image();
+
+
+          img.onload =
+          async function(){
+
+            try{
+
+              log(
+                'Imagen de referencia cargada'
+              );
+
+
+              const deteccion =
+                await faceapi
+                .detectSingleFace(
+                  img,
+                  new faceapi.TinyFaceDetectorOptions({
+                    inputSize:416,
+                    scoreThreshold:0.35
+                  })
+                )
+                .withFaceLandmarks()
+                .withFaceDescriptor();
+
+
+              if(!deteccion){
+
+                throw new Error(
+                  'No se encontró rostro en la foto de referencia.'
+                );
+
+              }
+
+
+              descriptorReferencia =
+                deteccion.descriptor;
+
+
+              log(
+                'Descriptor de referencia creado'
+              );
+
+
+              log(
+                'Dimensión: ' +
+                descriptorReferencia.length
+              );
+
+
+              resolve();
+
+            }
+            catch(error){
+
+              reject(error);
+
+            }
+
+          };
+
+
+          img.onerror =
+          function(){
+
+            reject(
+              new Error(
+                'No se pudo cargar la imagen de referencia.'
+              )
+            );
+
+          };
+
+
+          img.src =
+            'data:' +
+            respuesta.tipo +
+            ';base64,' +
+            respuesta.base64;
+
+
+        }
+        catch(error){
+
+          reject(error);
+
+        }
+
+      };
 
 
       const script =
-        document.createElement(
-          'script'
-        );
+        document.createElement('script');
 
 
       script.src =
-        APPS_SCRIPT_URL +
-        '?callback=' +
+        SCRIPT_URL +
+        '?accion=obtenerReferencia' +
+        '&codigo=' +
+        encodeURIComponent(
+          CODIGO_EMPLEADO
+        ) +
+        '&callback=' +
         encodeURIComponent(
           callback
-        ) +
-        '&accion=obtenerReferencia';
+        );
 
 
       script.onerror =
-        function() {
+      function(){
 
+        reject(
+          new Error(
+            'No se pudo conectar con Apps Script.'
+          )
+        );
 
-          delete window[
-            callback
-          ];
-
-
-          reject(
-            new Error(
-              'No se pudo conectar con Apps Script.'
-            )
-          );
-
-
-        };
+      };
 
 
       document.body.appendChild(
         script
       );
 
-
     }
   );
 
 }
 
 
-/*
-==================================================
-CREAR IMAGEN BASE64
-==================================================
-*/
+/* =====================================================
+   BOTÓN CÁMARA
+===================================================== */
 
-
-function crearImagenDesdeBase64(
-  base64,
-  tipo
-) {
-
-
-  return new Promise(
-    function(resolve, reject) {
-
-
-      const imagen =
-        new Image();
-
-
-      imagen.onload =
-        function() {
-
-          resolve(
-            imagen
-          );
-
-        };
-
-
-      imagen.onerror =
-        function() {
-
-          reject(
-            new Error(
-              'No se pudo cargar la imagen de referencia.'
-            )
-          );
-
-        };
-
-
-      imagen.src =
-        'data:' +
-        tipo +
-        ';base64,' +
-        base64;
-
-    }
-  );
-
-}
-
-
-/*
-==================================================
-BOTÓN CÁMARA
-==================================================
-*/
-
-
-boton.addEventListener(
+btnCamara.addEventListener(
   'click',
   iniciarCamara
 );
 
 
-/*
-==================================================
-INICIAR CÁMARA
-==================================================
-*/
+/* =====================================================
+   INICIAR CÁMARA
+===================================================== */
+
+async function iniciarCamara(){
+
+  if(camaraActiva){
+
+    return;
+
+  }
 
 
-async function iniciarCamara() {
+  try{
 
-
-  try {
-
-
-    console.log(
+    log(
       'BOTÓN CÁMARA PRESIONADO'
     );
 
 
     estado.textContent =
-      'Solicitando permiso de cámara...';
+      'Solicitando acceso a cámara...';
 
 
-    infoEstado.textContent =
-      'Solicitando cámara';
-
-
-    if (
-      !navigator.mediaDevices ||
-      !navigator.mediaDevices.getUserMedia
-    ) {
-
-      throw new Error(
-        'El navegador no permite acceso a la cámara.'
-      );
-
-    }
-
-
-    streamCamara =
+    const stream =
       await navigator.mediaDevices
-        .getUserMedia({
+      .getUserMedia({
 
-          video: {
-
-            width: {
-              ideal: 640
-            },
-
-            height: {
-              ideal: 480
-            },
-
-            facingMode:
-              'user'
-
+        video:{
+          width:{
+            ideal:640
           },
 
-          audio: false
+          height:{
+            ideal:480
+          },
 
-        });
+          facingMode:'user'
+        },
+
+        audio:false
+
+      });
 
 
-    console.log(
+    log(
       'CÁMARA OBTENIDA CORRECTAMENTE'
     );
 
 
     video.srcObject =
-      streamCamara;
+      stream;
+
+
+    await new Promise(
+      function(resolve){
+
+        if(
+          video.readyState >= 2
+        ){
+
+          resolve();
+
+          return;
+
+        }
+
+
+        video.onloadedmetadata =
+        function(){
+
+          resolve();
+
+        };
+
+      }
+    );
 
 
     await video.play();
 
 
+    log(
+      'VIDEO INICIADO'
+    );
+
+
+    log(
+      'ANCHO VIDEO: ' +
+      video.videoWidth
+    );
+
+
+    log(
+      'ALTO VIDEO: ' +
+      video.videoHeight
+    );
+
+
     canvas.width =
       video.videoWidth;
-
 
     canvas.height =
       video.videoHeight;
@@ -1016,30 +636,23 @@ async function iniciarCamara() {
     );
 
 
-    boton.disabled =
+    camaraActiva =
       true;
 
 
-    boton.textContent =
-      '📷 Cámara activa';
+    btnCamara.disabled =
+      true;
 
 
     estado.textContent =
       'Buscando rostro...';
 
 
-    infoEstado.textContent =
-      'Cámara activa';
-
-
     iniciarDeteccion();
 
 
   }
-
-
-  catch (error) {
-
+  catch(error){
 
     console.error(
       'ERROR CÁMARA:',
@@ -1048,88 +661,84 @@ async function iniciarCamara() {
 
 
     estado.textContent =
-      'ERROR: ' +
-      error.name +
-      ' - ' +
+      'Error de cámara: ' +
       error.message;
 
 
-    infoEstado.textContent =
-      'Error de cámara';
-
+    log(
+      'ERROR CÁMARA: ' +
+      error.message
+    );
 
   }
 
 }
 
 
-/*
-==================================================
-DETECCIÓN FACIAL
-==================================================
-*/
+/* =====================================================
+   DETECCIÓN FACIAL
+===================================================== */
 
+function iniciarDeteccion(){
 
-function iniciarDeteccion() {
+  if(analizando){
 
-
-  if (intervalo) {
-
-    clearInterval(
-      intervalo
-    );
+    return;
 
   }
 
 
-  intervalo =
-    setInterval(
-      detectarRostro,
-      700
-    );
+  analizando = true;
+
+
+  log(
+    'INICIANDO DETECCIÓN FACIAL'
+  );
+
+
+  detectar();
+
 
 }
 
 
-/*
-==================================================
-DETECTAR ROSTRO
-==================================================
-*/
+/* =====================================================
+   DETECTAR
+===================================================== */
+
+async function detectar(){
+
+  if(
+    !camaraActiva ||
+    !descriptorReferencia
+  ){
+
+    setTimeout(
+      detectar,
+      500
+    );
+
+    return;
+
+  }
 
 
-async function detectarRostro() {
-
-
-  try {
-
-
-    if (
-      video.readyState < 2
-    ) {
-
-      return;
-
-    }
-
-
-    if (
-      !descriptorReferencia
-    ) {
-
-      return;
-
-    }
-
+  try{
 
     const detecciones =
       await faceapi
-        .detectAllFaces(
-          video,
-          new faceapi.TinyFaceDetectorOptions()
-        )
-        .withFaceLandmarks()
-        .withFaceDescriptors();
+      .detectAllFaces(
+        video,
+        new faceapi.TinyFaceDetectorOptions({
+
+          inputSize:416,
+
+          scoreThreshold:0.30
+
+        })
+      )
+      .withFaceLandmarks()
+      .withFaceDescriptors();
 
 
     const resultados =
@@ -1146,9 +755,7 @@ async function detectarRostro() {
 
 
     const ctx =
-      canvas.getContext(
-        '2d'
-      );
+      canvas.getContext('2d');
 
 
     ctx.clearRect(
@@ -1159,195 +766,182 @@ async function detectarRostro() {
     );
 
 
-    faceapi.draw.drawDetections(
-      canvas,
-      resultados
-    );
-
-
-    faceapi.draw.drawFaceLandmarks(
-      canvas,
-      resultados
-    );
-
-
-    if (
+    if(
       resultados.length === 0
-    ) {
+    ){
 
-
-      tiempoReconocimiento =
-        null;
-
-
-      empleado.textContent =
+      estado.textContent =
         'Buscando rostro...';
 
 
-      estado.textContent =
-        'Acércate a la cámara';
-
-
-      return;
+      log(
+        'Sin rostro detectado'
+      );
 
     }
+    else{
 
-
-    /*
-    ==========================================
-    TOMAR PRIMER ROSTRO
-    ==========================================
-    */
-
-
-    const rostro =
-      resultados[0];
-
-
-    const distancia =
-      faceapi.euclideanDistance(
-        descriptorReferencia,
-        rostro.descriptor
+      log(
+        'ROSTROS DETECTADOS: ' +
+        resultados.length
       );
 
 
-    console.log(
-      'Distancia facial:',
-      distancia
-    );
+      faceapi.draw.drawDetections(
+        canvas,
+        resultados
+      );
 
 
-    /*
-    ==========================================
-    RECONOCIDO
-    ==========================================
-    */
+      faceapi.draw.drawFaceLandmarks(
+        canvas,
+        resultados
+      );
 
 
-    if (
-      distancia <
-      UMBRAL
-    ) {
+      const rostro =
+        resultados[0];
 
 
-      empleado.textContent =
-        '✅ ' +
-        nombreEmpleado;
+      const distancia =
+        faceapi.euclideanDistance(
+          descriptorReferencia,
+          rostro.descriptor
+        );
 
 
-      estado.textContent =
-        'Rostro reconocido';
+      const confianza =
+        Math.max(
+          0,
+          Math.min(
+            100,
+            (
+              1 -
+              distancia /
+              UMBRAL
+            ) * 100
+          )
+        ).toFixed(1);
 
 
-      if (
-        !tiempoReconocimiento
-      ) {
+      log(
+        'DISTANCIA: ' +
+        distancia.toFixed(4)
+      );
 
-        tiempoReconocimiento =
-          Date.now();
+
+      log(
+        'CONFIANZA: ' +
+        confianza +
+        '%'
+      );
+
+
+      if(
+        distancia <
+        UMBRAL
+      ){
+
+        estado.textContent =
+          nombreEmpleado +
+          ' reconocido (' +
+          confianza +
+          '%)';
+
+
+        if(
+          Date.now() -
+          ultimoRostro >
+          1000
+        ){
+
+          ultimoRostro =
+            Date.now();
+
+
+          if(
+            !registroRealizado
+          ){
+
+            registroRealizado =
+              true;
+
+
+            await registrarAsistencia();
+
+          }
+
+        }
+
+      }
+      else{
+
+        estado.textContent =
+          'Rostro detectado, pero no coincide (' +
+          confianza +
+          '%)';
 
       }
 
-
-      const tiempo =
-        Date.now() -
-        tiempoReconocimiento;
-
-
-      if (
-        tiempo >= 1200 &&
-        !reconocimientoConfirmado
-      ) {
-
-
-        reconocimientoConfirmado =
-          true;
-
-
-        await registrarAsistencia();
-
-
-      }
-
-
     }
-
-
-    else {
-
-
-      tiempoReconocimiento =
-        null;
-
-
-      empleado.textContent =
-        '❌ Rostro no reconocido';
-
-
-      estado.textContent =
-        'El rostro no coincide';
-
-
-    }
-
 
   }
-
-
-  catch (error) {
-
+  catch(error){
 
     console.error(
-      'ERROR DETECTANDO:',
+      'ERROR DETECCIÓN:',
       error
     );
 
 
+    log(
+      'ERROR DETECCIÓN: ' +
+      error.message
+    );
+
   }
+
+
+  setTimeout(
+    detectar,
+    500
+  );
 
 }
 
 
-/*
-==================================================
-REGISTRAR ASISTENCIA
-==================================================
-*/
+/* =====================================================
+   REGISTRAR ASISTENCIA
+===================================================== */
 
+async function registrarAsistencia(){
 
-async function registrarAsistencia() {
-
-
-  try {
-
+  try{
 
     estado.textContent =
-      'Capturando fotografía...';
+      'Identidad confirmada. Registrando...';
 
 
-    /*
-    ==========================================
-    CAPTURAR FOTO
-    ==========================================
-    */
+    log(
+      'IDENTIDAD CONFIRMADA'
+    );
 
 
-    const fotoCanvas =
+    const tempCanvas =
       document.createElement(
         'canvas'
       );
 
 
-    fotoCanvas.width =
+    tempCanvas.width =
       video.videoWidth;
 
-
-    fotoCanvas.height =
+    tempCanvas.height =
       video.videoHeight;
 
 
     const ctx =
-      fotoCanvas.getContext(
+      tempCanvas.getContext(
         '2d'
       );
 
@@ -1355,368 +949,231 @@ async function registrarAsistencia() {
     ctx.drawImage(
       video,
       0,
-      0,
-      video.videoWidth,
-      video.videoHeight
+      0
     );
 
 
     const foto =
-      fotoCanvas.toDataURL(
+      tempCanvas.toDataURL(
         'image/jpeg',
         0.85
       );
 
 
-    /*
-    ==========================================
-    GPS
-    ==========================================
-    */
-
-
-    estado.textContent =
-      'Obteniendo ubicación GPS...';
-
-
-    const posicion =
-      await obtenerGPS();
-
-
-    infoGPS.textContent =
-      posicion.lat +
-      ', ' +
-      posicion.lng;
-
-
-    /*
-    ==========================================
-    ENVIAR
-    ==========================================
-    */
-
-
-    estado.textContent =
-      'Registrando asistencia...';
-
-
-    const respuesta =
-      await enviarRegistro({
-
-        empleado:
-          nombreEmpleado,
-
-        foto:
-          foto,
-
-        lat:
-          posicion.lat,
-
-        lng:
-          posicion.lng,
-
-        observacion:
-          'Registro biométrico automático'
-
-      });
-
-
-    console.log(
-      'REGISTRO:',
-      respuesta
+    log(
+      'Fotografía de asistencia capturada'
     );
 
 
-    resultado.textContent =
-      '✅ Asistencia registrada: ' +
-      respuesta.tipo;
+    navigator.geolocation.getCurrentPosition(
+
+      function(pos){
+
+        const datos =
+        {
+
+          empleado:
+            nombreEmpleado,
+
+          foto:
+            foto,
+
+          lat:
+            pos.coords.latitude,
+
+          lng:
+            pos.coords.longitude,
+
+          observacion:
+            'Registro biométrico automático'
+
+        };
 
 
-    estado.textContent =
-      'Registro completado';
-
-
-    /*
-    ==========================================
-    REINICIAR
-    ==========================================
-    */
-
-
-    setTimeout(
-      function() {
-
-
-        reconocimientoConfirmado =
-          false;
-
-
-        tiempoReconocimiento =
-          null;
-
-
-        resultado.textContent =
-          '';
-
-
-        estado.textContent =
-          'Buscando rostro...';
-
+        enviarRegistro(
+          datos
+        );
 
       },
-      4000
-    );
 
+      function(){
+
+        const datos =
+        {
+
+          empleado:
+            nombreEmpleado,
+
+          foto:
+            foto,
+
+          observacion:
+            'Registro biométrico automático - GPS no disponible'
+
+        };
+
+
+        enviarRegistro(
+          datos
+        );
+
+      }
+
+    );
 
   }
+  catch(error){
 
-
-  catch (error) {
-
-
-    console.error(
-      'ERROR REGISTRANDO:',
-      error
-    );
-
-
-    estado.textContent =
-      'ERROR: ' +
-      error.message;
-
-
-    resultado.textContent =
-      '❌ No se pudo registrar';
-
-
-    reconocimientoConfirmado =
+    registroRealizado =
       false;
 
 
-    tiempoReconocimiento =
-      null;
+    estado.textContent =
+      'Error: ' +
+      error.message;
 
+
+    log(
+      'ERROR REGISTRANDO: ' +
+      error.message
+    );
 
   }
 
 }
 
 
-/*
-==================================================
-GPS
-==================================================
-*/
+/* =====================================================
+   ENVIAR REGISTRO
+===================================================== */
+
+function enviarRegistro(datos){
+
+  const callback =
+    'registro_' +
+    Date.now();
 
 
-function obtenerGPS() {
+  window[callback] =
+  function(respuesta){
+
+    try{
+
+      log(
+        'RESPUESTA REGISTRO RECIBIDA'
+      );
 
 
-  return new Promise(
-    function(resolve, reject) {
+      if(
+        respuesta &&
+        respuesta.ok === false
+      ){
 
-
-      if (
-        !navigator.geolocation
-      ) {
-
-        reject(
-          new Error(
-            'El navegador no permite geolocalización.'
-          )
+        throw new Error(
+          respuesta.error
         );
-
-        return;
 
       }
 
 
-      navigator.geolocation
-        .getCurrentPosition(
-
-          function(pos) {
-
-
-            resolve({
-
-              lat:
-                pos.coords.latitude,
-
-              lng:
-                pos.coords.longitude
-
-            });
-
-
-          },
-
-
-          function(error) {
-
-
-            reject(
-              new Error(
-                'No se pudo obtener la ubicación GPS.'
-              )
-            );
-
-
-          },
-
-
-          {
-
-            enableHighAccuracy:
-              true,
-
-            timeout:
-              10000,
-
-            maximumAge:
-              0
-
-          }
-
-        );
-
-    }
-  );
-
-}
-
-
-/*
-==================================================
-ENVIAR REGISTRO A APPS SCRIPT
-==================================================
-*/
-
-
-function enviarRegistro(
-  datos
-) {
-
-
-  return new Promise(
-    function(resolve, reject) {
-
-
-      const callback =
-        'registro_' +
-        Date.now();
-
-
-      window[callback] =
-        function(respuesta) {
-
-
-          console.log(
-            'RESPUESTA APPS SCRIPT:',
-            respuesta
-          );
-
-
-          delete window[
-            callback
-          ];
-
-
-          if (
-            respuesta &&
-            respuesta.ok === false
-          ) {
-
-
-            reject(
-              new Error(
-                respuesta.error ||
-                'Apps Script devolvió un error.'
-              )
-            );
-
-
-            return;
-
-          }
-
-
-          if (
-            !respuesta
-          ) {
-
-
-            reject(
-              new Error(
-                'No se recibió respuesta de Apps Script.'
-              )
-            );
-
-
-            return;
-
-          }
-
-
-          resolve(
-            respuesta
-          );
-
-
-        };
-
-
-      const script =
-        document.createElement(
-          'script'
+      estado.textContent =
+        'ASISTENCIA REGISTRADA: ' +
+        (
+          respuesta.tipo ||
+          'OK'
         );
 
 
-      script.src =
-        APPS_SCRIPT_URL +
-        '?callback=' +
-        encodeURIComponent(
-          callback
-        ) +
-        '&datos=' +
-        encodeURIComponent(
-          JSON.stringify(
-            datos
-          )
-        );
-
-
-      script.onerror =
-        function() {
-
-
-          delete window[
-            callback
-          ];
-
-
-          reject(
-            new Error(
-              'No se pudo conectar con Apps Script.'
-            )
-          );
-
-
-        };
-
-
-      document.body.appendChild(
-        script
+      log(
+        'REGISTRO COMPLETADO'
       );
 
 
     }
+    catch(error){
+
+      registroRealizado =
+        false;
+
+
+      estado.textContent =
+        'Error registrando asistencia: ' +
+        error.message;
+
+
+      log(
+        'ERROR REGISTRO: ' +
+        error.message
+      );
+
+    }
+
+
+    delete window[callback];
+
+  };
+
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  script.src =
+    SCRIPT_URL +
+    '?callback=' +
+    encodeURIComponent(
+      callback
+    ) +
+    '&datos=' +
+    encodeURIComponent(
+      JSON.stringify(datos)
+    );
+
+
+  script.onerror =
+  function(){
+
+    registroRealizado =
+      false;
+
+
+    estado.textContent =
+      'No se pudo conectar con Apps Script.';
+
+
+    log(
+      'ERROR DE CONEXIÓN CON APPS SCRIPT'
+    );
+
+  };
+
+
+  document.body.appendChild(
+    script
   );
 
 }
 
 
-</script>
+/* =====================================================
+   ARRANCAR
+===================================================== */
 
+window.addEventListener(
+  'load',
+  function(){
+
+    btnCamara.disabled =
+      true;
+
+    iniciarSistema();
+
+  }
+);
+
+</script>
 
 </body>
 
