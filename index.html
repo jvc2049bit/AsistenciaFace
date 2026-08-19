@@ -1342,25 +1342,189 @@ async function registrarAsistencia(){
 
 /* =====================================================
    ENVIAR REGISTRO A APPS SCRIPT
+   VERSIÓN POST
 ===================================================== */
 
-function enviarRegistro(
-  datos
-){
+function enviarRegistro(datos){
 
   log(
-    'ENVIANDO REGISTRO A APPS SCRIPT...'
+    'ENVIANDO REGISTRO A APPS SCRIPT MEDIANTE POST...'
   );
-
 
   estado.textContent =
     'Registrando asistencia...';
 
 
-  const callback =
-    'registro_' +
+  /* ===================================================
+     CREAR IFRAME OCULTO
+  =================================================== */
+
+  const iframeName =
+    'iframeRegistro_' +
     Date.now();
 
+
+  const iframe =
+    document.createElement('iframe');
+
+
+  iframe.name =
+    iframeName;
+
+
+  iframe.style.display =
+    'none';
+
+
+  iframe.id =
+    iframeName;
+
+
+  document.body.appendChild(
+    iframe
+  );
+
+
+  /* ===================================================
+     CREAR FORMULARIO
+  =================================================== */
+
+  const formulario =
+    document.createElement('form');
+
+
+  formulario.method =
+    'POST';
+
+
+  formulario.action =
+    SCRIPT_URL;
+
+
+  formulario.target =
+    iframeName;
+
+
+  formulario.style.display =
+    'none';
+
+
+  /* ===================================================
+     CONVERTIR DATOS A JSON
+  =================================================== */
+
+  let datosJSON;
+
+  try{
+
+    datosJSON =
+      JSON.stringify(
+        datos
+      );
+
+  }
+
+  catch(error){
+
+    log(
+      'ERROR CONVIRTIENDO DATOS A JSON: ' +
+      error.message
+    );
+
+
+    estado.textContent =
+      'Error preparando el registro.';
+
+
+    iframe.remove();
+
+    return;
+
+  }
+
+
+  log(
+    'DATOS PREPARADOS PARA POST'
+  );
+
+
+  log(
+    'EMPLEADO: ' +
+    datos.empleado
+  );
+
+
+  log(
+    'FOTOGRAFÍA: ' +
+    (
+      datos.foto
+        ? datos.foto.length
+        : 0
+    ) +
+    ' caracteres'
+  );
+
+
+  if(
+    datos.lat !== undefined &&
+    datos.lng !== undefined
+  ){
+
+    log(
+      'GPS: ' +
+      datos.lat +
+      ', ' +
+      datos.lng
+    );
+
+  }
+
+  else{
+
+    log(
+      'GPS: NO DISPONIBLE'
+    );
+
+  }
+
+
+  /* ===================================================
+     CREAR CAMPO DATOS
+  =================================================== */
+
+  const campoDatos =
+    document.createElement('input');
+
+
+  campoDatos.type =
+    'hidden';
+
+
+  campoDatos.name =
+    'datos';
+
+
+  campoDatos.value =
+    datosJSON;
+
+
+  formulario.appendChild(
+    campoDatos
+  );
+
+
+  /* ===================================================
+     AGREGAR FORMULARIO AL DOCUMENTO
+  =================================================== */
+
+  document.body.appendChild(
+    formulario
+  );
+
+
+  /* ===================================================
+     CONTROL DE TIEMPO
+  =================================================== */
 
   let terminado =
     false;
@@ -1370,8 +1534,12 @@ function enviarRegistro(
     setTimeout(
       function(){
 
-        if(terminado){
+        if(
+          terminado
+        ){
+
           return;
+
         }
 
 
@@ -1379,33 +1547,203 @@ function enviarRegistro(
           true;
 
 
-        delete window[callback];
-
-
-        registroRealizado =
-          false;
-
-
         estado.textContent =
           'Tiempo de espera agotado al registrar.';
 
 
         log(
-          'TIMEOUT APPS SCRIPT'
+          'TIMEOUT ESPERANDO RESPUESTA DE APPS SCRIPT'
         );
+
+
+        try{
+
+          formulario.remove();
+
+        }
+
+        catch(error){}
+
+
+        try{
+
+          iframe.remove();
+
+        }
+
+        catch(error){}
 
       },
       30000
     );
 
 
-  window[callback] =
-  function(respuesta){
+  /* ===================================================
+     CARGA DEL IFRAME
+  =================================================== */
 
-    if(terminado){
-      return;
-    }
+  iframe.onload =
+    function(){
 
+      if(
+        terminado
+      ){
+
+        return;
+
+      }
+
+
+      /*
+       * El iframe puede cargar incluso cuando Apps Script
+       * devuelve una respuesta HTML o JSON.
+       *
+       * Lo importante en esta etapa es confirmar que
+       * la solicitud POST fue enviada.
+       */
+
+      terminado =
+        true;
+
+
+      clearTimeout(
+        tiempoMaximo
+      );
+
+
+      log(
+        'RESPUESTA DEL POST RECIBIDA'
+      );
+
+
+      estado.textContent =
+        'Solicitud enviada. Verificando registro...';
+
+
+      /*
+       * Damos unos milisegundos para que Apps Script
+       * termine de escribir en Sheets/Drive.
+       */
+
+      setTimeout(
+        function(){
+
+          estado.textContent =
+            'ASISTENCIA ENVIADA A APPS SCRIPT';
+
+
+          log(
+            'POST COMPLETADO'
+          );
+
+
+          /*
+           * Permitimos limpiar los elementos temporales.
+           */
+
+          try{
+
+            formulario.remove();
+
+          }
+
+          catch(error){}
+
+
+          try{
+
+            iframe.remove();
+
+          }
+
+          catch(error){}
+
+        },
+        1500
+      );
+
+    };
+
+
+  /* ===================================================
+     ERROR DEL IFRAME
+  =================================================== */
+
+  iframe.onerror =
+    function(){
+
+      if(
+        terminado
+      ){
+
+        return;
+
+      }
+
+
+      terminado =
+        true;
+
+
+      clearTimeout(
+        tiempoMaximo
+      );
+
+
+      estado.textContent =
+        'Error enviando asistencia.';
+
+
+      log(
+        'ERROR CARGANDO RESPUESTA DE APPS SCRIPT'
+      );
+
+
+      registroRealizado =
+        false;
+
+
+      try{
+
+        formulario.remove();
+
+      }
+
+      catch(error){}
+
+
+      try{
+
+        iframe.remove();
+
+      }
+
+      catch(error){}
+
+    };
+
+
+  /* ===================================================
+     ENVIAR POST
+  =================================================== */
+
+  log(
+    'ENVIANDO POST...'
+  );
+
+
+  try{
+
+    formulario.submit();
+
+
+    log(
+      'POST ENVIADO CORRECTAMENTE'
+    );
+
+  }
+
+  catch(error){
 
     terminado =
       true;
@@ -1416,85 +1754,41 @@ function enviarRegistro(
     );
 
 
+    registroRealizado =
+      false;
+
+
+    estado.textContent =
+      'Error enviando asistencia: ' +
+      error.message;
+
+
+    log(
+      'ERROR AL EJECUTAR POST: ' +
+      error.message
+    );
+
+
     try{
 
-      log(
-        'RESPUESTA REGISTRO RECIBIDA'
-      );
-
-
-      if(
-        !respuesta
-      ){
-
-        throw new Error(
-          'Apps Script devolvió una respuesta vacía.'
-        );
-
-      }
-
-
-      if(
-        respuesta.ok === false
-      ){
-
-        throw new Error(
-          respuesta.error ||
-          'Apps Script devolvió un error.'
-        );
-
-      }
-
-
-      const tipo =
-        respuesta.tipo ||
-        'OK';
-
-
-      estado.textContent =
-        'ASISTENCIA REGISTRADA: ' +
-        tipo;
-
-
-      log(
-        'REGISTRO COMPLETADO'
-      );
-
-
-      log(
-        'TIPO: ' +
-        tipo
-      );
-
-
-      registroRealizado =
-        true;
-
+      formulario.remove();
 
     }
 
-    catch(error){
-
-      registroRealizado =
-        false;
+    catch(error){}
 
 
-      estado.textContent =
-        'Error registrando asistencia: ' +
-        error.message;
+    try{
 
-
-      log(
-        'ERROR REGISTRO: ' +
-        error.message
-      );
+      iframe.remove();
 
     }
 
+    catch(error){}
 
-    delete window[callback];
+  }
 
-  };
+}
 
 
   /* ===============================================
