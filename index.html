@@ -174,12 +174,18 @@ const CODIGO_EMPLEADO =
 'EMP001';
 
 
+/*
+ * Distancia máxima permitida.
+ *
+ * Menor distancia = mayor similitud.
+ */
+
 const UMBRAL =
 0.60;
 
 
 /* =====================================================
-   URL DE MODELOS FACE API
+   MODELOS FACE API
 ===================================================== */
 
 const MODELOS_URL =
@@ -187,7 +193,7 @@ const MODELOS_URL =
 
 
 /* =====================================================
-   ELEMENTOS
+   ELEMENTOS HTML
 ===================================================== */
 
 const video =
@@ -243,7 +249,7 @@ let ultimoRostro =
 
 
 /* =====================================================
-   DIAGNÓSTICO
+   FUNCIÓN DE DIAGNÓSTICO
 ===================================================== */
 
 function log(mensaje){
@@ -258,7 +264,7 @@ function log(mensaje){
 
 
 /* =====================================================
-   INICIO DEL SISTEMA
+   INICIAR SISTEMA
 ===================================================== */
 
 async function iniciarSistema(){
@@ -270,13 +276,23 @@ async function iniciarSistema(){
 
 
     log(
+      '================================='
+    );
+
+
+    log(
+      'INICIO DEL SISTEMA'
+    );
+
+
+    log(
       'URL APPS SCRIPT: ' +
       SCRIPT_URL
     );
 
 
     log(
-      'Código empleado: ' +
+      'CÓDIGO EMPLEADO: ' +
       CODIGO_EMPLEADO
     );
 
@@ -290,10 +306,9 @@ async function iniciarSistema(){
     );
 
 
-    await faceapi.nets.tinyFaceDetector
-      .loadFromUri(
-        MODELOS_URL
-      );
+    await faceapi.nets.tinyFaceDetector.loadFromUri(
+      MODELOS_URL
+    );
 
 
     log(
@@ -310,10 +325,9 @@ async function iniciarSistema(){
     );
 
 
-    await faceapi.nets.faceLandmark68Net
-      .loadFromUri(
-        MODELOS_URL
-      );
+    await faceapi.nets.faceLandmark68Net.loadFromUri(
+      MODELOS_URL
+    );
 
 
     log(
@@ -330,14 +344,18 @@ async function iniciarSistema(){
     );
 
 
-    await faceapi.nets.faceRecognitionNet
-      .loadFromUri(
-        MODELOS_URL
-      );
+    await faceapi.nets.faceRecognitionNet.loadFromUri(
+      MODELOS_URL
+    );
 
 
     log(
       'FaceRecognition OK'
+    );
+
+
+    log(
+      'MODELOS FACIALES CARGADOS CORRECTAMENTE'
     );
 
 
@@ -346,7 +364,7 @@ async function iniciarSistema(){
 
 
     /* ===============================================
-       REFERENCIA
+       OBTENER REFERENCIA
     =============================================== */
 
     await cargarReferencia();
@@ -358,6 +376,11 @@ async function iniciarSistema(){
 
     btnCamara.disabled =
       false;
+
+
+    log(
+      '================================='
+    );
 
 
     log(
@@ -381,9 +404,10 @@ async function iniciarSistema(){
 
 
     log(
-      'ERROR: ' +
+      'ERROR INICIANDO SISTEMA: ' +
       error.message
     );
+
 
   }
 
@@ -391,13 +415,18 @@ async function iniciarSistema(){
 
 
 /* =====================================================
-   CARGAR REFERENCIA
+   CARGAR REFERENCIA FACIAL
 ===================================================== */
 
 async function cargarReferencia(){
 
   log(
-    'Solicitando fotografía a Apps Script...'
+    '================================='
+  );
+
+
+  log(
+    'SOLICITANDO REFERENCIA A APPS SCRIPT'
   );
 
 
@@ -421,6 +450,7 @@ async function cargarReferencia(){
               return;
             }
 
+
             terminado =
               true;
 
@@ -433,6 +463,7 @@ async function cargarReferencia(){
                 'Tiempo de espera agotado al conectar con Apps Script.'
               )
             );
+
 
           },
           30000
@@ -459,13 +490,11 @@ async function cargarReferencia(){
         try{
 
           log(
-            'RESPUESTA REFERENCIA RECIBIDA'
+            'RESPUESTA DE REFERENCIA RECIBIDA'
           );
 
 
-          if(
-            !respuesta
-          ){
+          if(!respuesta){
 
             throw new Error(
               'Apps Script devolvió una respuesta vacía.'
@@ -474,9 +503,7 @@ async function cargarReferencia(){
           }
 
 
-          if(
-            respuesta.ok === false
-          ){
+          if(respuesta.ok === false){
 
             throw new Error(
               respuesta.error ||
@@ -497,14 +524,12 @@ async function cargarReferencia(){
 
 
           log(
-            'Empleado: ' +
+            'EMPLEADO: ' +
             nombreEmpleado
           );
 
 
-          if(
-            !respuesta.base64
-          ){
+          if(!respuesta.base64){
 
             throw new Error(
               'No se recibió la fotografía Base64.'
@@ -514,11 +539,15 @@ async function cargarReferencia(){
 
 
           log(
-            'Base64 recibido: ' +
+            'BASE64 RECIBIDO: ' +
             respuesta.base64.length +
             ' caracteres'
           );
 
+
+          /* ==========================================
+             CREAR IMAGEN
+          ========================================== */
 
           const img =
             new Image();
@@ -530,9 +559,13 @@ async function cargarReferencia(){
             try{
 
               log(
-                'Imagen de referencia cargada'
+                'IMAGEN DE REFERENCIA CARGADA'
               );
 
+
+              /* ======================================
+                 DETECTAR ROSTRO EN REFERENCIA
+              ====================================== */
 
               const deteccion =
                 await faceapi
@@ -552,9 +585,7 @@ async function cargarReferencia(){
                 .withFaceDescriptor();
 
 
-              if(
-                !deteccion
-              ){
+              if(!deteccion){
 
                 throw new Error(
                   'No se encontró rostro en la foto de referencia.'
@@ -563,17 +594,21 @@ async function cargarReferencia(){
               }
 
 
+              /* ======================================
+                 GUARDAR DESCRIPTOR
+              ====================================== */
+
               descriptorReferencia =
                 deteccion.descriptor;
 
 
               log(
-                'Descriptor de referencia creado'
+                'DESCRIPTOR DE REFERENCIA CREADO'
               );
 
 
               log(
-                'Dimensión: ' +
+                'DIMENSIÓN: ' +
                 descriptorReferencia.length
               );
 
@@ -637,6 +672,10 @@ async function cargarReferencia(){
       };
 
 
+      /* ==========================================
+         CREAR SCRIPT JSONP
+      ========================================== */
+
       const script =
         document.createElement(
           'script'
@@ -696,7 +735,7 @@ async function cargarReferencia(){
 
 
 /* =====================================================
-   BOTÓN CÁMARA
+   BOTÓN INICIAR CÁMARA
 ===================================================== */
 
 btnCamara.addEventListener(
@@ -711,9 +750,7 @@ btnCamara.addEventListener(
 
 async function iniciarCamara(){
 
-  if(
-    camaraActiva
-  ){
+  if(camaraActiva){
 
     return;
 
@@ -721,6 +758,11 @@ async function iniciarCamara(){
 
 
   try{
+
+    log(
+      '================================='
+    );
+
 
     log(
       'BOTÓN CÁMARA PRESIONADO'
@@ -743,9 +785,12 @@ async function iniciarCamara(){
     }
 
 
+    /* ===============================================
+       SOLICITAR CÁMARA
+    =============================================== */
+
     const stream =
-      await navigator.mediaDevices
-      .getUserMedia({
+      await navigator.mediaDevices.getUserMedia({
 
         video:{
 
@@ -762,8 +807,7 @@ async function iniciarCamara(){
 
         },
 
-        audio:
-          false
+        audio:false
 
       });
 
@@ -780,9 +824,7 @@ async function iniciarCamara(){
     await new Promise(
       function(resolve){
 
-        if(
-          video.readyState >= 2
-        ){
+        if(video.readyState >= 2){
 
           resolve();
 
@@ -822,6 +864,10 @@ async function iniciarCamara(){
     );
 
 
+    /* ===============================================
+       CONFIGURAR CANVAS
+    =============================================== */
+
     canvas.width =
       video.videoWidth;
 
@@ -854,7 +900,13 @@ async function iniciarCamara(){
       'Buscando rostro...';
 
 
+    log(
+      'CÁMARA ACTIVA'
+    );
+
+
     iniciarDeteccion();
+
 
   }
 
@@ -887,9 +939,7 @@ async function iniciarCamara(){
 
 function iniciarDeteccion(){
 
-  if(
-    analizando
-  ){
+  if(analizando){
 
     return;
 
@@ -901,7 +951,7 @@ function iniciarDeteccion(){
 
 
   log(
-    'INICIANDO DETECCIÓN FACIAL'
+    'INICIANDO DETECCIÓN FACIAL...'
   );
 
 
@@ -911,7 +961,7 @@ function iniciarDeteccion(){
 
 
 /* =====================================================
-   DETECTAR ROSTRO
+   DETECCIÓN FACIAL
 ===================================================== */
 
 async function detectar(){
@@ -925,6 +975,7 @@ async function detectar(){
       detectar,
       500
     );
+
 
     return;
 
@@ -966,6 +1017,10 @@ async function detectar(){
       );
 
 
+    /* ===============================================
+       CANVAS
+    =============================================== */
+
     const ctx =
       canvas.getContext(
         '2d'
@@ -984,9 +1039,7 @@ async function detectar(){
        SIN ROSTRO
     =============================================== */
 
-    if(
-      resultados.length === 0
-    ){
+    if(resultados.length === 0){
 
       estado.textContent =
         'Buscando rostro...';
@@ -1017,12 +1070,20 @@ async function detectar(){
         resultados[0];
 
 
+      /* =============================================
+         DISTANCIA FACIAL
+      ============================================= */
+
       const distancia =
         faceapi.euclideanDistance(
           descriptorReferencia,
           rostro.descriptor
         );
 
+
+      /* =============================================
+         CONFIANZA
+      ============================================= */
 
       const confianza =
         Math.max(
@@ -1053,13 +1114,10 @@ async function detectar(){
 
 
       /* =============================================
-         ROSTRO RECONOCIDO
+         ROSTRO COINCIDE
       ============================================= */
 
-      if(
-        distancia <
-        UMBRAL
-      ){
+      if(distancia < UMBRAL){
 
         estado.textContent =
           nombreEmpleado +
@@ -1078,9 +1136,7 @@ async function detectar(){
             Date.now();
 
 
-          if(
-            !registroRealizado
-          ){
+          if(!registroRealizado){
 
             registroRealizado =
               true;
@@ -1144,9 +1200,18 @@ async function registrarAsistencia(){
 
 
     log(
+      '================================='
+    );
+
+
+    log(
       'IDENTIDAD CONFIRMADA'
     );
 
+
+    /* ===============================================
+       CAPTURAR FOTOGRAFÍA
+    =============================================== */
 
     const tempCanvas =
       document.createElement(
@@ -1185,21 +1250,26 @@ async function registrarAsistencia(){
 
 
     log(
-      'FOTOGRAFÍA DE ASISTENCIA CAPTURADA'
+      'FOTOGRAFÍA CAPTURADA'
     );
 
 
-    estado.textContent =
-      'Obteniendo ubicación GPS...';
+    log(
+      'TAMAÑO FOTO BASE64: ' +
+      foto.length +
+      ' caracteres'
+    );
 
 
     /* ===============================================
        GPS
     =============================================== */
 
-    if(
-      !navigator.geolocation
-    ){
+    estado.textContent =
+      'Obteniendo ubicación GPS...';
+
+
+    if(!navigator.geolocation){
 
       log(
         'GPS NO DISPONIBLE'
@@ -1342,22 +1412,33 @@ async function registrarAsistencia(){
 
 /* =====================================================
    ENVIAR REGISTRO A APPS SCRIPT
-   VERSIÓN POST
+   MÉTODO POST
 ===================================================== */
 
 function enviarRegistro(datos){
 
   log(
-    'ENVIANDO REGISTRO A APPS SCRIPT MEDIANTE POST...'
+    '================================='
   );
+
+
+  log(
+    'ENVIANDO REGISTRO A APPS SCRIPT'
+  );
+
+
+  log(
+    'MÉTODO: POST'
+  );
+
 
   estado.textContent =
     'Registrando asistencia...';
 
 
-  /* ===================================================
-     CREAR IFRAME OCULTO
-  =================================================== */
+  /* ===============================================
+     IFRAME OCULTO
+  =============================================== */
 
   const iframeName =
     'iframeRegistro_' +
@@ -1365,10 +1446,16 @@ function enviarRegistro(datos){
 
 
   const iframe =
-    document.createElement('iframe');
+    document.createElement(
+      'iframe'
+    );
 
 
   iframe.name =
+    iframeName;
+
+
+  iframe.id =
     iframeName;
 
 
@@ -1376,21 +1463,19 @@ function enviarRegistro(datos){
     'none';
 
 
-  iframe.id =
-    iframeName;
-
-
   document.body.appendChild(
     iframe
   );
 
 
-  /* ===================================================
-     CREAR FORMULARIO
-  =================================================== */
+  /* ===============================================
+     FORMULARIO
+  =============================================== */
 
   const formulario =
-    document.createElement('form');
+    document.createElement(
+      'form'
+    );
 
 
   formulario.method =
@@ -1409,11 +1494,12 @@ function enviarRegistro(datos){
     'none';
 
 
-  /* ===================================================
+  /* ===============================================
      CONVERTIR DATOS A JSON
-  =================================================== */
+  =============================================== */
 
   let datosJSON;
+
 
   try{
 
@@ -1427,7 +1513,7 @@ function enviarRegistro(datos){
   catch(error){
 
     log(
-      'ERROR CONVIRTIENDO DATOS A JSON: ' +
+      'ERROR JSON: ' +
       error.message
     );
 
@@ -1438,13 +1524,22 @@ function enviarRegistro(datos){
 
     iframe.remove();
 
+
+    registroRealizado =
+      false;
+
+
     return;
 
   }
 
 
+  /* ===============================================
+     DIAGNÓSTICO
+  =============================================== */
+
   log(
-    'DATOS PREPARADOS PARA POST'
+    'DATOS PREPARADOS CORRECTAMENTE'
   );
 
 
@@ -1455,7 +1550,7 @@ function enviarRegistro(datos){
 
 
   log(
-    'FOTOGRAFÍA: ' +
+    'FOTO: ' +
     (
       datos.foto
         ? datos.foto.length
@@ -1488,12 +1583,14 @@ function enviarRegistro(datos){
   }
 
 
-  /* ===================================================
-     CREAR CAMPO DATOS
-  =================================================== */
+  /* ===============================================
+     CAMPO DATOS
+  =============================================== */
 
   const campoDatos =
-    document.createElement('input');
+    document.createElement(
+      'input'
+    );
 
 
   campoDatos.type =
@@ -1513,18 +1610,14 @@ function enviarRegistro(datos){
   );
 
 
-  /* ===================================================
-     AGREGAR FORMULARIO AL DOCUMENTO
-  =================================================== */
-
   document.body.appendChild(
     formulario
   );
 
 
-  /* ===================================================
+  /* ===============================================
      CONTROL DE TIEMPO
-  =================================================== */
+  =============================================== */
 
   let terminado =
     false;
@@ -1534,9 +1627,7 @@ function enviarRegistro(datos){
     setTimeout(
       function(){
 
-        if(
-          terminado
-        ){
+        if(terminado){
 
           return;
 
@@ -1552,7 +1643,7 @@ function enviarRegistro(datos){
 
 
         log(
-          'TIMEOUT ESPERANDO RESPUESTA DE APPS SCRIPT'
+          'TIMEOUT ESPERANDO RESPUESTA'
         );
 
 
@@ -1573,34 +1664,29 @@ function enviarRegistro(datos){
 
         catch(error){}
 
+
+        registroRealizado =
+          false;
+
+
       },
       30000
     );
 
 
-  /* ===================================================
-     CARGA DEL IFRAME
-  =================================================== */
+  /* ===============================================
+     RESPUESTA DEL IFRAME
+  =============================================== */
 
   iframe.onload =
     function(){
 
-      if(
-        terminado
-      ){
+      if(terminado){
 
         return;
 
       }
 
-
-      /*
-       * El iframe puede cargar incluso cuando Apps Script
-       * devuelve una respuesta HTML o JSON.
-       *
-       * Lo importante en esta etapa es confirmar que
-       * la solicitud POST fue enviada.
-       */
 
       terminado =
         true;
@@ -1617,29 +1703,25 @@ function enviarRegistro(datos){
 
 
       estado.textContent =
-        'Solicitud enviada. Verificando registro...';
+        'Asistencia enviada correctamente.';
+
+
+      log(
+        'POST COMPLETADO'
+      );
 
 
       /*
-       * Damos unos milisegundos para que Apps Script
-       * termine de escribir en Sheets/Drive.
+       * No ponemos registroRealizado=false aquí.
+       *
+       * Así evitamos que el mismo rostro registre
+       * repetidamente mientras permanece frente
+       * a la cámara.
        */
+
 
       setTimeout(
         function(){
-
-          estado.textContent =
-            'ASISTENCIA ENVIADA A APPS SCRIPT';
-
-
-          log(
-            'POST COMPLETADO'
-          );
-
-
-          /*
-           * Permitimos limpiar los elementos temporales.
-           */
 
           try{
 
@@ -1665,16 +1747,14 @@ function enviarRegistro(datos){
     };
 
 
-  /* ===================================================
+  /* ===============================================
      ERROR DEL IFRAME
-  =================================================== */
+  =============================================== */
 
   iframe.onerror =
     function(){
 
-      if(
-        terminado
-      ){
+      if(terminado){
 
         return;
 
@@ -1690,6 +1770,10 @@ function enviarRegistro(datos){
       );
 
 
+      registroRealizado =
+        false;
+
+
       estado.textContent =
         'Error enviando asistencia.';
 
@@ -1697,10 +1781,6 @@ function enviarRegistro(datos){
       log(
         'ERROR CARGANDO RESPUESTA DE APPS SCRIPT'
       );
-
-
-      registroRealizado =
-        false;
 
 
       try{
@@ -1723,9 +1803,9 @@ function enviarRegistro(datos){
     };
 
 
-  /* ===================================================
-     ENVIAR POST
-  =================================================== */
+  /* ===============================================
+     ENVIAR FORMULARIO
+  =============================================== */
 
   log(
     'ENVIANDO POST...'
@@ -1791,88 +1871,8 @@ function enviarRegistro(datos){
 }
 
 
-  /* ===============================================
-     CREAR SCRIPT JSONP
-  =============================================== */
-
-  const script =
-    document.createElement(
-      'script'
-    );
-
-
-  const datosJSON =
-    JSON.stringify(
-      datos
-    );
-
-
-  const url =
-    SCRIPT_URL +
-    '?accion=registrarAsistencia' +
-    '&datos=' +
-    encodeURIComponent(
-      datosJSON
-    ) +
-    '&callback=' +
-    encodeURIComponent(
-      callback
-    );
-
-
-  log(
-    'SOLICITUD JSONP CREADA'
-  );
-
-
-  script.src =
-    url;
-
-
-  script.onerror =
-  function(){
-
-    if(terminado){
-      return;
-    }
-
-
-    terminado =
-      true;
-
-
-    clearTimeout(
-      tiempoMaximo
-    );
-
-
-    delete window[callback];
-
-
-    registroRealizado =
-      false;
-
-
-    estado.textContent =
-      'No se pudo conectar con Apps Script.';
-
-
-    log(
-      'ERROR DE CONEXIÓN CON APPS SCRIPT'
-    );
-
-  };
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
 /* =====================================================
-   ARRANCAR
+   ARRANCAR APLICACIÓN
 ===================================================== */
 
 window.addEventListener(
