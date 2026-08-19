@@ -8,10 +8,9 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>AsistenciaFace</title>
+<title>AsistenciaFace - Pichari</title>
 
 <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-
 
 <style>
 
@@ -23,25 +22,112 @@
   box-sizing:border-box;
 }
 
+html,
 body{
   margin:0;
-  padding:20px;
-  font-family:Arial,Helvetica,sans-serif;
+  padding:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   background:#f3f4f6;
+
   text-align:center;
+
+  position:relative;
+
+  overflow-x:hidden;
+
 }
 
 
 /* =====================================================
-   ENCABEZADO
+   MARCA DE AGUA PICHARI
 ===================================================== */
 
-.encabezado{
+body::before{
+
+  content:"PICHARI";
+
+  position:fixed;
+
+  left:50%;
+
+  top:50%;
+
+  transform:
+    translate(-50%,-50%)
+    rotate(-15deg);
+
+  font-size:
+    clamp(100px,18vw,260px);
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    15px;
+
+  color:
+    rgba(30,64,175,0.055);
+
+  white-space:
+    nowrap;
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+  z-index:
+    0;
+
+}
+
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+===================================================== */
+
+#pagina{
+
+  position:relative;
+
+  z-index:1;
 
   width:100%;
-  max-width:900px;
 
-  margin:0 auto 10px auto;
+  min-height:100vh;
+
+  padding:
+    15px
+    20px
+    30px;
+
+}
+
+
+/* =====================================================
+   CABECERA INSTITUCIONAL
+===================================================== */
+
+#cabecera{
+
+  width:100%;
+
+  max-width:1000px;
+
+  margin:
+    0 auto
+    10px;
 
   display:flex;
 
@@ -51,30 +137,65 @@ body{
 
   gap:20px;
 
+  min-height:110px;
+
 }
 
 
 /* =====================================================
-   LOGOS
+   CONTENEDORES DE LOGOS
 ===================================================== */
 
 .logo{
 
-  width:110px;
+  width:
+    145px;
 
-  height:110px;
+  height:
+    105px;
 
-  object-fit:contain;
+  display:flex;
 
-  background:white;
+  align-items:center;
 
-  padding:8px;
+  justify-content:center;
 
-  border-radius:12px;
+  background:
+    rgba(255,255,255,0.85);
+
+  border-radius:
+    12px;
+
+  padding:
+    8px;
 
   box-shadow:
     0 3px 10px
-    rgba(0,0,0,0.12);
+    rgba(0,0,0,0.08);
+
+}
+
+
+/* =====================================================
+   IMÁGENES DE LOGOS
+===================================================== */
+
+.logo img{
+
+  max-width:
+    100%;
+
+  max-height:
+    100%;
+
+  width:
+    auto;
+
+  height:
+    auto;
+
+  object-fit:
+    contain;
 
 }
 
@@ -83,33 +204,44 @@ body{
    TITULO CENTRAL
 ===================================================== */
 
-.titulo{
+#titulo{
 
-  flex:1;
+  flex:
+    1;
 
-  text-align:center;
-
-}
-
-
-.titulo h1{
-
-  margin:0;
-
-  font-size:30px;
-
-  color:#111827;
+  text-align:
+    center;
 
 }
 
 
-.titulo p{
+#titulo h1{
 
-  margin:7px 0 0 0;
+  margin:
+    0;
 
-  color:#4b5563;
+  font-size:
+    clamp(24px,4vw,38px);
 
-  font-size:16px;
+  font-weight:
+    800;
+
+  color:
+    #111827;
+
+}
+
+
+#titulo p{
+
+  margin:
+    6px 0 0;
+
+  font-size:
+    15px;
+
+  color:
+    #4b5563;
 
 }
 
@@ -120,17 +252,23 @@ body{
 
 #estado{
 
-  font-size:18px;
+  font-size:
+    18px;
 
-  font-weight:bold;
+  font-weight:
+    bold;
 
-  margin:15px auto;
+  margin:
+    12px auto;
 
-  max-width:700px;
+  max-width:
+    700px;
 
-  min-height:28px;
+  min-height:
+    28px;
 
-  color:#111827;
+  color:
+    #111827;
 
 }
 
@@ -141,19 +279,26 @@ body{
 
 #referencia{
 
-  margin:10px auto;
+  margin:
+    10px auto;
 
-  padding:10px;
+  padding:
+    9px 15px;
 
-  background:#dcfce7;
+  background:
+    rgba(220,252,231,0.90);
 
-  color:#166534;
+  color:
+    #166534;
 
-  border-radius:10px;
+  border-radius:
+    10px;
 
-  max-width:500px;
+  max-width:
+    500px;
 
-  font-weight:bold;
+  font-weight:
+    bold;
 
 }
 
@@ -164,13 +309,17 @@ body{
 
 #contenedor{
 
-  position:relative;
+  position:
+    relative;
 
-  width:640px;
+  width:
+    640px;
 
-  max-width:95%;
+  max-width:
+    95%;
 
-  margin:20px auto;
+  margin:
+    20px auto;
 
 }
 
@@ -181,36 +330,47 @@ body{
 
 #video{
 
-  width:100%;
+  width:
+    100%;
 
-  display:block;
+  display:
+    block;
 
-  border-radius:15px;
+  border-radius:
+    15px;
 
-  border:4px solid #2563eb;
+  border:
+    4px solid #2563eb;
 
-  background:#000;
+  background:
+    #000;
 
 }
 
 
 /* =====================================================
-   OVERLAY
+   CANVAS
 ===================================================== */
 
 #overlay{
 
-  position:absolute;
+  position:
+    absolute;
 
-  left:0;
+  left:
+    0;
 
-  top:0;
+  top:
+    0;
 
-  width:100%;
+  width:
+    100%;
 
-  height:100%;
+  height:
+    100%;
 
-  pointer-events:none;
+  pointer-events:
+    none;
 
 }
 
@@ -221,60 +381,97 @@ body{
 
 button{
 
-  padding:14px 25px;
+  padding:
+    15px 30px;
 
-  border:0;
+  border:
+    0;
 
-  border-radius:10px;
+  border-radius:
+    10px;
 
-  background:#2563eb;
+  background:
+    #2563eb;
 
-  color:white;
+  color:
+    white;
 
-  font-size:17px;
+  font-size:
+    18px;
 
-  font-weight:bold;
+  font-weight:
+    bold;
 
-  cursor:pointer;
-
-  min-width:220px;
+  cursor:
+    pointer;
 
   box-shadow:
-    0 3px 8px
-    rgba(0,0,0,0.15);
+    0 4px 10px
+    rgba(37,99,235,0.25);
+
+  transition:
+    0.2s;
 
 }
 
 
 button:hover{
 
-  background:#1d4ed8;
+  background:
+    #1d4ed8;
+
+  transform:
+    translateY(-1px);
 
 }
 
 
 button:disabled{
 
-  background:#9ca3af;
+  background:
+    #9ca3af;
 
-  cursor:not-allowed;
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
+
+  box-shadow:
+    none;
+
+}
+
+
+/* =====================================================
+   MENSAJE INFERIOR PARA EMPLEADOS
+===================================================== */
+
+#mensaje{
+
+  margin:
+    18px auto;
+
+  max-width:
+    640px;
+
+  font-size:
+    14px;
+
+  color:
+    #6b7280;
 
 }
 
 
 /* =====================================================
    DIAGNÓSTICO OCULTO
-=====================================================
-
-   El diagnóstico permanece disponible para nosotros
-   mediante la consola del navegador, pero NO aparece
-   en la página para los empleados.
-
 ===================================================== */
 
 #diagnostico{
 
-  display:none;
+  display:
+    none;
 
 }
 
@@ -285,57 +482,91 @@ button:disabled{
 
 @media(max-width:700px){
 
-  body{
+  #pagina{
 
-    padding:12px;
+    padding:
+      10px
+      10px
+      25px;
 
   }
 
 
-  .encabezado{
+  #cabecera{
 
-    gap:8px;
+    gap:
+      8px;
+
+    min-height:
+      85px;
 
   }
 
 
   .logo{
 
-    width:75px;
+    width:
+      90px;
 
-    height:75px;
+    height:
+      75px;
 
-    padding:5px;
-
-  }
-
-
-  .titulo h1{
-
-    font-size:21px;
+    padding:
+      5px;
 
   }
 
 
-  .titulo p{
+  #titulo h1{
 
-    font-size:12px;
+    font-size:
+      22px;
+
+  }
+
+
+  #titulo p{
+
+    font-size:
+      12px;
 
   }
 
 
   #contenedor{
 
-    max-width:100%;
+    max-width:
+      98%;
 
   }
 
 
   button{
 
-    width:90%;
+    width:
+      90%;
 
-    max-width:300px;
+    max-width:
+      350px;
+
+  }
+
+}
+
+
+/* =====================================================
+   PANTALLAS GRANDES
+===================================================== */
+
+@media(min-width:1000px){
+
+  .logo{
+
+    width:
+      165px;
+
+    height:
+      120px;
 
   }
 
@@ -349,25 +580,34 @@ button:disabled{
 <body>
 
 
-<!-- =====================================================
-     ENCABEZADO CON LOGOS
-===================================================== -->
-
-<div class="encabezado">
+<div id="pagina">
 
 
-  <!-- LOGO INSTITUCIONAL -->
+<!-- =================================================
+     CABECERA
+================================================= -->
 
-  <img
-    class="logo"
-    src="https://drive.google.com/thumbnail?id=1GuC8MKZDc0IE4-mXLd8kQ8P53CeIOZ1B&sz=w400"
-    alt="Logo institucional"
-  >
+<div id="cabecera">
 
 
-  <!-- TITULO -->
+  <!-- ===============================================
+       LOGO INSTITUCIONAL
+  ================================================ -->
 
-  <div class="titulo">
+  <div class="logo">
+
+    <img
+      src="https://drive.google.com/uc?export=view&id=1GuC8MKZDc0IE4-mXLd8kQ8P53CeIOZ1B"
+      alt="Logo institucional">
+
+  </div>
+
+
+  <!-- ===============================================
+       TÍTULO
+  ================================================ -->
+
+  <div id="titulo">
 
     <h1>
       AsistenciaFace
@@ -380,21 +620,25 @@ button:disabled{
   </div>
 
 
-  <!-- LOGO DE LA DIVISIÓN -->
+  <!-- ===============================================
+       LOGO DE LA DIVISIÓN
+  ================================================ -->
 
-  <img
-    class="logo"
-    src="https://drive.google.com/thumbnail?id=1LqKPJJBgkjUuYhLewDDrr2ad813w9ngO&sz=w400"
-    alt="Logo de la división"
-  >
+  <div class="logo">
+
+    <img
+      src="https://drive.google.com/uc?export=view&id=1fobqTmvyxiSwDWU0bdJ12TC20BhYDr9r"
+      alt="Logo de la división">
+
+  </div>
 
 
 </div>
 
 
-<!-- =====================================================
+<!-- =================================================
      REFERENCIA
-===================================================== -->
+================================================= -->
 
 <div id="referencia">
 
@@ -403,9 +647,9 @@ button:disabled{
 </div>
 
 
-<!-- =====================================================
+<!-- =================================================
      ESTADO
-===================================================== -->
+================================================= -->
 
 <div id="estado">
 
@@ -414,9 +658,9 @@ button:disabled{
 </div>
 
 
-<!-- =====================================================
+<!-- =================================================
      CÁMARA
-===================================================== -->
+================================================= -->
 
 <div id="contenedor">
 
@@ -434,9 +678,9 @@ button:disabled{
 </div>
 
 
-<!-- =====================================================
+<!-- =================================================
      BOTÓN
-===================================================== -->
+================================================= -->
 
 <button
   id="btnCamara"
@@ -447,12 +691,19 @@ button:disabled{
 </button>
 
 
-<!-- =====================================================
+<div id="mensaje">
+
+  Coloque su rostro frente a la cámara
+  para realizar la identificación.
+
+</div>
+
+
+<!-- =================================================
      DIAGNÓSTICO
      
-     Está oculto visualmente.
-     Los mensajes siguen apareciendo en la consola.
-===================================================== -->
+     PERMANECE OCULTO PARA LOS EMPLEADOS.
+================================================= -->
 
 <div id="diagnostico">
 
@@ -460,6 +711,8 @@ button:disabled{
 
 </div>
 
+
+</div>
 
 
 <script>
@@ -490,8 +743,7 @@ const UMBRAL =
 
 
 /*
- * Número de coincidencias consecutivas
- * necesarias antes de registrar.
+ * Número de coincidencias consecutivas.
  */
 
 const COINCIDENCIAS_NECESARIAS =
@@ -507,7 +759,7 @@ const INTERVALO_DETECCION =
 
 
 /*
- * URL de modelos Face API.
+ * Modelos Face API.
  */
 
 const MODELOS_URL =
@@ -515,7 +767,7 @@ const MODELOS_URL =
 
 
 /* =====================================================
-   ELEMENTOS HTML
+   ELEMENTOS
 ===================================================== */
 
 const video =
@@ -543,7 +795,7 @@ document.getElementById('btnCamara');
 
 
 /* =====================================================
-   VARIABLES DEL SISTEMA
+   VARIABLES
 ===================================================== */
 
 let descriptorReferencia =
@@ -564,9 +816,6 @@ false;
 
 /*
  * Bloqueo principal.
- *
- * Cuando pasa a true, no se permite
- * otro registro durante esta sesión.
  */
 
 let registroRealizado =
@@ -574,8 +823,7 @@ false;
 
 
 /*
- * Bloqueo adicional para impedir
- * dos envíos simultáneos.
+ * Evita dos envíos simultáneos.
  */
 
 let enviandoRegistro =
@@ -583,7 +831,7 @@ false;
 
 
 /*
- * Contador de coincidencias consecutivas.
+ * Coincidencias consecutivas.
  */
 
 let coincidenciasConsecutivas =
@@ -591,81 +839,50 @@ let coincidenciasConsecutivas =
 
 
 /*
- * Última distancia detectada.
+ * Datos de diagnóstico.
  */
 
 let ultimaDistancia =
 null;
 
 
-/*
- * Número de detecciones realizadas.
- */
-
 let totalDetecciones =
 0;
 
 
-/*
- * Número de rostros detectados.
- */
-
 let ultimoNumeroRostros =
 0;
 
-
-/*
- * Hora de la última coincidencia.
- */
 
 let ultimoRostro =
 0;
 
 
 /* =====================================================
-   FUNCIÓN DE DIAGNÓSTICO
+   DIAGNÓSTICO
 ===================================================== */
 
 function log(mensaje){
 
-  console.log(
-    mensaje
-  );
+  console.log(mensaje);
 
-
-  if(
-    diagnostico
-  ){
-
-    diagnostico.innerHTML +=
-      '<br>' +
-      mensaje;
-
-  }
+  diagnostico.innerHTML +=
+    '<br>' +
+    mensaje;
 
 }
 
-
-/* =====================================================
-   DIAGNÓSTICO LIMPIO
-===================================================== */
 
 function limpiarDiagnostico(){
 
-  if(
-    diagnostico
-  ){
-
-    diagnostico.innerHTML =
-      'DIAGNÓSTICO DEL SISTEMA';
-
-  }
+  diagnostico.innerHTML =
+    'DIAGNÓSTICO DEL SISTEMA';
 
 }
 
 
 /* =====================================================
-   INICIO DEL SISTEMA
+   INICIO
 ===================================================== */
 
 async function iniciarSistema(){
@@ -722,9 +939,9 @@ async function iniciarSistema(){
     );
 
 
-    /* =================================================
-       TINY FACE DETECTOR
-    ================================================= */
+    /* ===============================================
+       DETECTOR
+    =============================================== */
 
     estado.textContent =
       'Cargando detector facial...';
@@ -746,9 +963,9 @@ async function iniciarSistema(){
     );
 
 
-    /* =================================================
+    /* ===============================================
        LANDMARKS
-    ================================================= */
+    =============================================== */
 
     log(
       'Cargando FaceLandmark68...'
@@ -766,9 +983,9 @@ async function iniciarSistema(){
     );
 
 
-    /* =================================================
-       FACE RECOGNITION
-    ================================================= */
+    /* ===============================================
+       RECONOCIMIENTO
+    =============================================== */
 
     log(
       'Cargando FaceRecognition...'
@@ -791,9 +1008,9 @@ async function iniciarSistema(){
     );
 
 
-    /* =================================================
+    /* ===============================================
        REFERENCIA
-    ================================================= */
+    =============================================== */
 
     estado.textContent =
       'Cargando referencia facial...';
@@ -851,22 +1068,12 @@ async function iniciarSistema(){
 
 
     log(
-      '================================='
-    );
-
-
-    log(
       'ERROR DE INICIALIZACIÓN'
     );
 
 
     log(
       error.message
-    );
-
-
-    log(
-      '================================='
     );
 
   }
@@ -1186,7 +1393,7 @@ async function cargarReferencia(){
 
 
 /* =====================================================
-   BOTÓN CÁMARA
+   BOTÓN
 ===================================================== */
 
 btnCamara.addEventListener(
@@ -1333,11 +1540,13 @@ async function iniciarCamara(){
     faceapi.matchDimensions(
       canvas,
       {
+
         width:
           video.videoWidth,
 
         height:
           video.videoHeight
+
       }
     );
 
@@ -1423,7 +1632,7 @@ function iniciarDeteccion(){
 
 
 /* =====================================================
-   DETECTAR ROSTRO
+   DETECTAR
 ===================================================== */
 
 async function detectar(){
@@ -1509,9 +1718,9 @@ async function detectar(){
       resultados.length;
 
 
-    /* =================================================
+    /* ===============================================
        SIN ROSTRO
-    ================================================= */
+    =============================================== */
 
     if(
       resultados.length === 0
@@ -1528,17 +1737,12 @@ async function detectar(){
       estado.textContent =
         'Buscando rostro...';
 
-
-      log(
-        'SIN ROSTRO - contador reiniciado'
-      );
-
     }
 
 
-    /* =================================================
-       UNO O MÁS ROSTROS
-    ================================================= */
+    /* ===============================================
+       ROSTRO
+    =============================================== */
 
     else{
 
@@ -1551,12 +1755,6 @@ async function detectar(){
       faceapi.draw.drawFaceLandmarks(
         canvas,
         resultados
-      );
-
-
-      log(
-        'ROSTROS DETECTADOS: ' +
-        resultados.length
       );
 
 
@@ -1576,14 +1774,20 @@ async function detectar(){
 
 
       log(
+        'ROSTROS DETECTADOS: ' +
+        resultados.length
+      );
+
+
+      log(
         'DISTANCIA: ' +
         distancia.toFixed(4)
       );
 
 
-      /* =================================================
-         COINCIDENCIA
-      ================================================= */
+      /* =============================================
+         COINCIDE
+      ============================================= */
 
       if(
         distancia <
@@ -1618,7 +1822,7 @@ async function detectar(){
 
 
         estado.textContent =
-          'Rostro coincidente ' +
+          'Rostro identificado ' +
           coincidenciasConsecutivas +
           '/' +
           COINCIDENCIAS_NECESARIAS;
@@ -1643,22 +1847,12 @@ async function detectar(){
 
 
             log(
-              '================================='
-            );
-
-
-            log(
               '3 COINCIDENCIAS CONSECUTIVAS'
             );
 
 
             log(
               'IDENTIDAD CONFIRMADA'
-            );
-
-
-            log(
-              '================================='
             );
 
 
@@ -1670,9 +1864,9 @@ async function detectar(){
 
       }
 
-      /* =================================================
+      /* =============================================
          NO COINCIDE
-      ================================================= */
+      ============================================= */
 
       else{
 
@@ -1682,12 +1876,6 @@ async function detectar(){
 
         log(
           'COINCIDENCIA: NO'
-        );
-
-
-        log(
-          'CONTADOR REINICIADO: 0/' +
-          COINCIDENCIAS_NECESARIAS
         );
 
 
@@ -1741,7 +1929,7 @@ async function registrarAsistencia(){
   ){
 
     log(
-      'REGISTRO YA EN PROCESO. SOLICITUD IGNORADA.'
+      'REGISTRO YA EN PROCESO.'
     );
 
 
@@ -1806,29 +1994,17 @@ async function registrarAsistencia(){
     );
 
 
-    log(
-      'TAMAÑO FOTO: ' +
-      foto.length +
-      ' caracteres'
-    );
-
-
     estado.textContent =
       'Obteniendo ubicación GPS...';
 
 
-    /* =================================================
-       GPS
-    ================================================= */
+    /* ===============================================
+       GPS NO DISPONIBLE
+    =============================================== */
 
     if(
       !navigator.geolocation
     ){
-
-      log(
-        'GPS NO DISPONIBLE'
-      );
-
 
       await enviarRegistro({
 
@@ -1848,6 +2024,10 @@ async function registrarAsistencia(){
 
     }
 
+
+    /* ===============================================
+       GPS
+    =============================================== */
 
     navigator.geolocation.getCurrentPosition(
 
@@ -1870,8 +2050,7 @@ async function registrarAsistencia(){
         );
 
 
-        const datos =
-        {
+        await enviarRegistro({
 
           empleado:
             nombreEmpleado,
@@ -1888,12 +2067,7 @@ async function registrarAsistencia(){
           observacion:
             'Registro biométrico automático'
 
-        };
-
-
-        await enviarRegistro(
-          datos
-        );
+        });
 
       },
 
@@ -1905,8 +2079,7 @@ async function registrarAsistencia(){
         );
 
 
-        const datos =
-        {
+        await enviarRegistro({
 
           empleado:
             nombreEmpleado,
@@ -1917,12 +2090,7 @@ async function registrarAsistencia(){
           observacion:
             'Registro biométrico automático - GPS no disponible'
 
-        };
-
-
-        await enviarRegistro(
-          datos
-        );
+        });
 
       },
 
@@ -1969,7 +2137,7 @@ async function registrarAsistencia(){
 
 
 /* =====================================================
-   ENVIAR REGISTRO A APPS SCRIPT
+   ENVIAR REGISTRO
    POST + IFRAME
 ===================================================== */
 
@@ -1977,11 +2145,6 @@ function enviarRegistro(datos){
 
   return new Promise(
     function(resolve){
-
-      log(
-        '================================='
-      );
-
 
       log(
         'MÉTODO: POST'
@@ -1997,9 +2160,9 @@ function enviarRegistro(datos){
         'Registrando asistencia...';
 
 
-      /* =================================================
+      /* ===============================================
          IFRAME
-      ================================================= */
+      =============================================== */
 
       const iframeName =
         'iframeRegistro_' +
@@ -2029,9 +2192,9 @@ function enviarRegistro(datos){
       );
 
 
-      /* =================================================
+      /* ===============================================
          FORMULARIO
-      ================================================= */
+      =============================================== */
 
       const formulario =
         document.createElement(
@@ -2055,9 +2218,9 @@ function enviarRegistro(datos){
         'none';
 
 
-      /* =================================================
+      /* ===============================================
          JSON
-      ================================================= */
+      =============================================== */
 
       let datosJSON;
 
@@ -2147,9 +2310,9 @@ function enviarRegistro(datos){
       }
 
 
-      /* =================================================
+      /* ===============================================
          CAMPO DATOS
-      ================================================= */
+      =============================================== */
 
       const campoDatos =
         document.createElement(
@@ -2179,9 +2342,9 @@ function enviarRegistro(datos){
       );
 
 
-      /* =================================================
-         CONTROL DE TIEMPO
-      ================================================= */
+      /* ===============================================
+         TIMEOUT
+      =============================================== */
 
       let terminado =
         false;
@@ -2246,9 +2409,9 @@ function enviarRegistro(datos){
         );
 
 
-      /* =================================================
+      /* ===============================================
          RESPUESTA
-      ================================================= */
+      =============================================== */
 
       iframe.onload =
       function(){
@@ -2281,11 +2444,6 @@ function enviarRegistro(datos){
 
 
         log(
-          '================================='
-        );
-
-
-        log(
           'POST COMPLETADO'
         );
 
@@ -2295,16 +2453,10 @@ function enviarRegistro(datos){
         );
 
 
-        log(
-          '================================='
-        );
-
-
         /*
-         * NO liberamos registroRealizado.
+         * Mantenemos el bloqueo.
          *
-         * De esta manera no puede volver
-         * a registrarse otra asistencia
+         * No se permitirá otro registro
          * durante esta sesión.
          */
 
@@ -2342,9 +2494,9 @@ function enviarRegistro(datos){
       };
 
 
-      /* =================================================
-         ERROR IFRAME
-      ================================================= */
+      /* ===============================================
+         ERROR
+      =============================================== */
 
       iframe.onerror =
       function(){
@@ -2407,9 +2559,9 @@ function enviarRegistro(datos){
       };
 
 
-      /* =================================================
-         ENVIAR POST
-      ================================================= */
+      /* ===============================================
+         POST
+      =============================================== */
 
       log(
         'ENVIANDO POST...'
@@ -2486,7 +2638,7 @@ function enviarRegistro(datos){
 
 
 /* =====================================================
-   ARRANCAR
+   ARRANCAR SISTEMA
 ===================================================== */
 
 window.addEventListener(
