@@ -12,7 +12,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 
+
 <style>
+
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+===================================================== */
 
 *{
   box-sizing:border-box;
@@ -26,89 +31,314 @@ body{
   text-align:center;
 }
 
-h1{
-  margin:10px 0 5px;
+
+/* =====================================================
+   ENCABEZADO
+===================================================== */
+
+.encabezado{
+
+  width:100%;
+  max-width:900px;
+
+  margin:0 auto 10px auto;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:20px;
+
 }
 
-p{
-  margin-top:5px;
+
+/* =====================================================
+   LOGOS
+===================================================== */
+
+.logo{
+
+  width:110px;
+
+  height:110px;
+
+  object-fit:contain;
+
+  background:white;
+
+  padding:8px;
+
+  border-radius:12px;
+
+  box-shadow:
+    0 3px 10px
+    rgba(0,0,0,0.12);
+
 }
+
+
+/* =====================================================
+   TITULO CENTRAL
+===================================================== */
+
+.titulo{
+
+  flex:1;
+
+  text-align:center;
+
+}
+
+
+.titulo h1{
+
+  margin:0;
+
+  font-size:30px;
+
+  color:#111827;
+
+}
+
+
+.titulo p{
+
+  margin:7px 0 0 0;
+
+  color:#4b5563;
+
+  font-size:16px;
+
+}
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
 
 #estado{
+
   font-size:18px;
+
   font-weight:bold;
+
   margin:15px auto;
+
   max-width:700px;
+
   min-height:28px;
+
+  color:#111827;
+
 }
+
+
+/* =====================================================
+   REFERENCIA
+===================================================== */
 
 #referencia{
+
   margin:10px auto;
+
   padding:10px;
+
   background:#dcfce7;
+
   color:#166534;
+
   border-radius:10px;
+
   max-width:500px;
+
   font-weight:bold;
+
 }
+
+
+/* =====================================================
+   CONTENEDOR DE CÁMARA
+===================================================== */
 
 #contenedor{
+
   position:relative;
+
   width:640px;
+
   max-width:95%;
+
   margin:20px auto;
+
 }
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
 
 #video{
+
   width:100%;
+
   display:block;
+
   border-radius:15px;
+
   border:4px solid #2563eb;
+
   background:#000;
+
 }
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
 
 #overlay{
+
   position:absolute;
+
   left:0;
+
   top:0;
+
   width:100%;
+
   height:100%;
+
   pointer-events:none;
+
 }
 
-#diagnostico{
-  background:#111827;
-  color:#fff;
-  padding:15px;
-  border-radius:12px;
-  max-width:640px;
-  margin:20px auto;
-  text-align:left;
-  font-family:monospace;
-  font-size:14px;
-  line-height:1.6;
-  overflow-wrap:anywhere;
-  min-height:180px;
-}
+
+/* =====================================================
+   BOTÓN
+===================================================== */
 
 button{
+
   padding:14px 25px;
+
   border:0;
+
   border-radius:10px;
+
   background:#2563eb;
+
   color:white;
+
   font-size:17px;
+
   font-weight:bold;
+
   cursor:pointer;
+
+  min-width:220px;
+
+  box-shadow:
+    0 3px 8px
+    rgba(0,0,0,0.15);
+
 }
+
 
 button:hover{
+
   background:#1d4ed8;
+
 }
 
+
 button:disabled{
+
   background:#9ca3af;
+
   cursor:not-allowed;
+
+}
+
+
+/* =====================================================
+   DIAGNÓSTICO OCULTO
+=====================================================
+
+   El diagnóstico permanece disponible para nosotros
+   mediante la consola del navegador, pero NO aparece
+   en la página para los empleados.
+
+===================================================== */
+
+#diagnostico{
+
+  display:none;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:700px){
+
+  body{
+
+    padding:12px;
+
+  }
+
+
+  .encabezado{
+
+    gap:8px;
+
+  }
+
+
+  .logo{
+
+    width:75px;
+
+    height:75px;
+
+    padding:5px;
+
+  }
+
+
+  .titulo h1{
+
+    font-size:21px;
+
+  }
+
+
+  .titulo p{
+
+    font-size:12px;
+
+  }
+
+
+  #contenedor{
+
+    max-width:100%;
+
+  }
+
+
+  button{
+
+    width:90%;
+
+    max-width:300px;
+
+  }
+
 }
 
 </style>
@@ -118,20 +348,75 @@ button:disabled{
 
 <body>
 
-<h1>AsistenciaFace</h1>
 
-<p>Sistema biométrico de control de asistencia</p>
+<!-- =====================================================
+     ENCABEZADO CON LOGOS
+===================================================== -->
 
+<div class="encabezado">
+
+
+  <!-- LOGO INSTITUCIONAL -->
+
+  <img
+    class="logo"
+    src="https://drive.google.com/thumbnail?id=1GuC8MKZDc0IE4-mXLd8kQ8P53CeIOZ1B&sz=w400"
+    alt="Logo institucional"
+  >
+
+
+  <!-- TITULO -->
+
+  <div class="titulo">
+
+    <h1>
+      AsistenciaFace
+    </h1>
+
+    <p>
+      Sistema biométrico de control de asistencia
+    </p>
+
+  </div>
+
+
+  <!-- LOGO DE LA DIVISIÓN -->
+
+  <img
+    class="logo"
+    src="https://drive.google.com/thumbnail?id=1LqKPJJBgkjUuYhLewDDrr2ad813w9ngO&sz=w400"
+    alt="Logo de la división"
+  >
+
+
+</div>
+
+
+<!-- =====================================================
+     REFERENCIA
+===================================================== -->
 
 <div id="referencia">
+
   Cargando referencia facial...
+
 </div>
 
+
+<!-- =====================================================
+     ESTADO
+===================================================== -->
 
 <div id="estado">
+
   Inicializando sistema...
+
 </div>
 
+
+<!-- =====================================================
+     CÁMARA
+===================================================== -->
 
 <div id="contenedor">
 
@@ -142,10 +427,16 @@ button:disabled{
     playsinline>
   </video>
 
-  <canvas id="overlay"></canvas>
+  <canvas
+    id="overlay">
+  </canvas>
 
 </div>
 
+
+<!-- =====================================================
+     BOTÓN
+===================================================== -->
 
 <button
   id="btnCamara"
@@ -156,11 +447,19 @@ button:disabled{
 </button>
 
 
+<!-- =====================================================
+     DIAGNÓSTICO
+     
+     Está oculto visualmente.
+     Los mensajes siguen apareciendo en la consola.
+===================================================== -->
+
 <div id="diagnostico">
 
   INICIANDO DIAGNÓSTICO...
 
 </div>
+
 
 
 <script>
@@ -267,7 +566,7 @@ false;
  * Bloqueo principal.
  *
  * Cuando pasa a true, no se permite
- * otro registro.
+ * otro registro durante esta sesión.
  */
 
 let registroRealizado =
@@ -329,11 +628,20 @@ let ultimoRostro =
 
 function log(mensaje){
 
-  console.log(mensaje);
+  console.log(
+    mensaje
+  );
 
-  diagnostico.innerHTML +=
-    '<br>' +
-    mensaje;
+
+  if(
+    diagnostico
+  ){
+
+    diagnostico.innerHTML +=
+      '<br>' +
+      mensaje;
+
+  }
 
 }
 
@@ -344,8 +652,14 @@ function log(mensaje){
 
 function limpiarDiagnostico(){
 
-  diagnostico.innerHTML =
-    'DIAGNÓSTICO DEL SISTEMA';
+  if(
+    diagnostico
+  ){
+
+    diagnostico.innerHTML =
+      'DIAGNÓSTICO DEL SISTEMA';
+
+  }
 
 }
 
@@ -1130,11 +1444,6 @@ async function detectar(){
   }
 
 
-  /*
-   * Si ya se realizó el registro,
-   * no continuamos intentando registrar.
-   */
-
   if(
     registroRealizado
   ){
@@ -1251,11 +1560,6 @@ async function detectar(){
       );
 
 
-      /*
-       * Para seguridad, utilizamos solamente
-       * el primer rostro detectado.
-       */
-
       const rostro =
         resultados[0];
 
@@ -1319,10 +1623,6 @@ async function detectar(){
           '/' +
           COINCIDENCIAS_NECESARIAS;
 
-
-        /*
-         * Confirmación final.
-         */
 
         if(
           coincidenciasConsecutivas >=
@@ -1416,11 +1716,6 @@ async function detectar(){
   }
 
 
-  /*
-   * Continuar analizando solamente
-   * si todavía no se registró.
-   */
-
   if(
     !registroRealizado
   ){
@@ -1440,10 +1735,6 @@ async function detectar(){
 ===================================================== */
 
 async function registrarAsistencia(){
-
-  /*
-   * Segundo bloqueo de seguridad.
-   */
 
   if(
     enviandoRegistro
@@ -1922,11 +2213,6 @@ function enviarRegistro(datos){
             );
 
 
-            /*
-             * Permitimos otro intento si realmente
-             * no hubo respuesta.
-             */
-
             registroRealizado =
               false;
 
@@ -2015,8 +2301,6 @@ function enviarRegistro(datos){
 
 
         /*
-         * IMPORTANTE:
-         *
          * NO liberamos registroRealizado.
          *
          * De esta manera no puede volver
@@ -2024,14 +2308,9 @@ function enviarRegistro(datos){
          * durante esta sesión.
          */
 
-
         enviandoRegistro =
           false;
 
-
-        /*
-         * Limpiar elementos temporales.
-         */
 
         setTimeout(
           function(){
