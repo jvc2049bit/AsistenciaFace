@@ -14,42 +14,77 @@
 
 <style>
 
-      .logo-superior {
-  width: 130px;
-  height: 130px;
-  object-fit: contain;
+/* =====================================================
+   LOGOS
+===================================================== */
+
+.logo-superior{
+
+  width:130px;
+  height:130px;
+
+  object-fit:contain;
+
 }
 
-.encabezado-logos {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
+
+.encabezado-logos{
+
+  width:100%;
+
+  max-width:900px;
+
+  margin:0 auto 10px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:5px 20px;
+
 }
+
+
 /* =====================================================
    CONFIGURACIÓN GENERAL
 ===================================================== */
 
 *{
+
   box-sizing:border-box;
+
 }
+
 
 html,
 body{
+
   min-height:100%;
+
 }
 
+
 body{
+
   margin:0;
+
   padding:20px;
-  font-family:Arial,Helvetica,sans-serif;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   background:#f3f4f6;
+
   text-align:center;
+
   position:relative;
+
   overflow-x:hidden;
+
 }
 
 
@@ -62,19 +97,22 @@ body{
   position:fixed;
 
   left:50%;
+
   top:55%;
 
   transform:
     translate(-50%,-50%)
     rotate(-12deg);
 
-  font-size:clamp(90px,18vw,240px);
+  font-size:
+    clamp(90px,18vw,240px);
 
   font-weight:900;
 
   letter-spacing:15px;
 
-  color:rgba(0,0,0,0.035);
+  color:
+    rgba(0,0,0,0.035);
 
   white-space:nowrap;
 
@@ -152,7 +190,7 @@ body{
 
 
 /* =====================================================
-   IMÁGENES DE LOS LOGOS
+   IMÁGENES
 ===================================================== */
 
 .logoInstitucional img,
@@ -250,7 +288,7 @@ p{
 
 
 /* =====================================================
-   CONTENEDOR DE VIDEO
+   CONTENEDOR VIDEO
 ===================================================== */
 
 #contenedor{
@@ -307,10 +345,7 @@ p{
 
 
 /* =====================================================
-   DIAGNÓSTICO
-
-   SE MANTIENE EN EL HTML Y JAVASCRIPT,
-   PERO NO SE MUESTRA AL EMPLEADO.
+   DIAGNÓSTICO OCULTO
 ===================================================== */
 
 #diagnostico{
@@ -351,6 +386,7 @@ button{
 
 }
 
+
 button:hover{
 
   background:#1d4ed8;
@@ -358,6 +394,7 @@ button:hover{
   transform:translateY(-1px);
 
 }
+
 
 button:disabled{
 
@@ -371,7 +408,7 @@ button:disabled{
 
 
 /* =====================================================
-   ADAPTACIÓN PARA CELULARES
+   CELULARES
 ===================================================== */
 
 @media(max-width:700px){
@@ -382,6 +419,7 @@ button:disabled{
 
   }
 
+
   #cabeceraInstitucional{
 
     gap:10px;
@@ -389,6 +427,7 @@ button:disabled{
     padding:5px;
 
   }
+
 
   .logoInstitucional,
   .logoDivision{
@@ -399,6 +438,7 @@ button:disabled{
 
   }
 
+
   .logoInstitucional img,
   .logoDivision img{
 
@@ -406,11 +446,13 @@ button:disabled{
 
   }
 
+
   h1{
 
     font-size:25px;
 
   }
+
 
   #marcaAgua{
 
@@ -435,6 +477,7 @@ button:disabled{
 
   }
 
+
   .logoInstitucional,
   .logoDivision{
 
@@ -444,12 +487,14 @@ button:disabled{
 
   }
 
+
   .logoInstitucional img,
   .logoDivision img{
 
     max-height:70px;
 
   }
+
 
   h1{
 
@@ -466,21 +511,28 @@ button:disabled{
 
 <body>
 
-      <div class="encabezado-logos">
+
+<!-- ===================================================
+     LOGOS SUPERIORES
+=================================================== -->
+
+<div class="encabezado-logos">
 
   <img
     class="logo-superior"
     src="https://drive.google.com/thumbnail?id=1GuC8MKZDc0IE4-mXLd8kQ8P53CeIOZ1B&sz=w400"
-    alt="Logo institucional"
+    alt=""
   >
+
 
   <img
     class="logo-superior"
     src="https://drive.google.com/thumbnail?id=1fobqTmvyxiSwDWU0bdJ12TC20BhYDr9r&sz=w400"
-    alt="Logo división"
+    alt=""
   >
 
 </div>
+
 
 <!-- ===================================================
      MARCA DE AGUA
@@ -499,7 +551,7 @@ button:disabled{
 
 
 <!-- ===================================================
-     CABECERA CON LOGOS
+     CABECERA
 =================================================== -->
 
 <div id="cabeceraInstitucional">
@@ -517,15 +569,14 @@ button:disabled{
   </div>
 
 
-  <!-- =================================================
-       TÍTULO
-  ================================================== -->
+  <!-- TÍTULO -->
 
   <div>
 
     <h1>
       Asistencia
     </h1>
+
 
     <p>
       Sistema biométrico de control de asistencia
@@ -534,7 +585,7 @@ button:disabled{
   </div>
 
 
-  <!-- LOGO DE LA DIVISIÓN -->
+  <!-- LOGO DIVISIÓN -->
 
   <div class="logoDivision">
 
@@ -550,12 +601,12 @@ button:disabled{
 
 
 <!-- ===================================================
-     REFERENCIA
+     REFERENCIAS
 =================================================== -->
 
 <div id="referencia">
 
-  Cargando referencia facial...
+  Cargando referencias faciales...
 
 </div>
 
@@ -584,6 +635,7 @@ button:disabled{
     playsinline>
   </video>
 
+
   <canvas id="overlay"></canvas>
 
 </div>
@@ -604,9 +656,6 @@ button:disabled{
 
 <!-- ===================================================
      DIAGNÓSTICO OCULTO
-
-     EL JAVASCRIPT CONTINÚA UTILIZÁNDOLO.
-     NO SE ELIMINA.
 =================================================== -->
 
 <div id="diagnostico">
@@ -632,14 +681,25 @@ const SCRIPT_URL =
 'https://script.google.com/macros/s/AKfycbwSnVCHj2qiKd9JfCembdLIJ8bFuFYQBJ-2D4xE25i0PHhJKDdOuAdps4aa3a5-E9sy/exec';
 
 
-const CODIGO_EMPLEADO =
-'EMP001';
+/*
+ * =====================================================
+ * IMPORTANTE
+ * =====================================================
+ *
+ * YA NO EXISTE:
+ *
+ * const CODIGO_EMPLEADO = 'EMP001';
+ *
+ * El sistema ahora obtiene automáticamente
+ * todos los empleados desde Apps Script.
+ */
 
 
 /*
  * Distancia máxima permitida.
  *
- * Menor distancia = mayor similitud.
+ * Menor distancia =
+ * mayor similitud.
  */
 
 const UMBRAL =
@@ -647,8 +707,7 @@ const UMBRAL =
 
 
 /*
- * Número de coincidencias consecutivas
- * necesarias antes de registrar.
+ * Coincidencias consecutivas necesarias.
  */
 
 const COINCIDENCIAS_NECESARIAS =
@@ -656,7 +715,7 @@ const COINCIDENCIAS_NECESARIAS =
 
 
 /*
- * Intervalo entre análisis.
+ * Intervalo de análisis.
  */
 
 const INTERVALO_DETECCION =
@@ -664,7 +723,7 @@ const INTERVALO_DETECCION =
 
 
 /*
- * URL de modelos Face API.
+ * Modelos Face API.
  */
 
 const MODELOS_URL =
@@ -700,20 +759,49 @@ document.getElementById('btnCamara');
 
 
 /* =====================================================
-   VARIABLES DEL SISTEMA
+   VARIABLES
 ===================================================== */
 
-let descriptorReferencia =
+
+/*
+ * Lista de empleados.
+ */
+
+let empleados =
+[];
+
+
+/*
+ * Cada empleado tendrá:
+ *
+ * codigo
+ * nombre
+ * descriptor
+ */
+
+let descriptoresEmpleados =
+[];
+
+
+/*
+ * Empleado identificado.
+ */
+
+let empleadoIdentificado =
 null;
 
 
-let nombreEmpleado =
-'';
-
+/*
+ * Cámara.
+ */
 
 let camaraActiva =
 false;
 
+
+/*
+ * Análisis.
+ */
 
 let analizando =
 false;
@@ -736,7 +824,7 @@ false;
 
 
 /*
- * Contador de coincidencias consecutivas.
+ * Coincidencias consecutivas.
  */
 
 let coincidenciasConsecutivas =
@@ -744,7 +832,7 @@ let coincidenciasConsecutivas =
 
 
 /*
- * Última distancia detectada.
+ * Última distancia.
  */
 
 let ultimaDistancia =
@@ -752,7 +840,7 @@ null;
 
 
 /*
- * Número de detecciones realizadas.
+ * Total detecciones.
  */
 
 let totalDetecciones =
@@ -760,7 +848,7 @@ let totalDetecciones =
 
 
 /*
- * Número de rostros detectados.
+ * Último número de rostros.
  */
 
 let ultimoNumeroRostros =
@@ -768,7 +856,7 @@ let ultimoNumeroRostros =
 
 
 /*
- * Hora de la última coincidencia.
+ * Último rostro.
  */
 
 let ultimoRostro =
@@ -776,12 +864,15 @@ let ultimoRostro =
 
 
 /* =====================================================
-   FUNCIÓN DE DIAGNÓSTICO
+   DIAGNÓSTICO
 ===================================================== */
 
 function log(mensaje){
 
-  console.log(mensaje);
+  console.log(
+    mensaje
+  );
+
 
   diagnostico.innerHTML +=
     '<br>' +
@@ -791,7 +882,7 @@ function log(mensaje){
 
 
 /* =====================================================
-   DIAGNÓSTICO LIMPIO
+   LIMPIAR DIAGNÓSTICO
 ===================================================== */
 
 function limpiarDiagnostico(){
@@ -833,18 +924,7 @@ async function iniciarSistema(){
 
 
     log(
-      'URL APPS SCRIPT:'
-    );
-
-
-    log(
-      SCRIPT_URL
-    );
-
-
-    log(
-      'CÓDIGO EMPLEADO: ' +
-      CODIGO_EMPLEADO
+      'MODO: RECONOCIMIENTO AUTOMÁTICO'
     );
 
 
@@ -861,7 +941,7 @@ async function iniciarSistema(){
 
 
     /* =================================================
-       TINY FACE DETECTOR
+       TINY FACE
     ================================================= */
 
     estado.textContent =
@@ -905,7 +985,7 @@ async function iniciarSistema(){
 
 
     /* =================================================
-       FACE RECOGNITION
+       RECONOCIMIENTO
     ================================================= */
 
     log(
@@ -930,23 +1010,24 @@ async function iniciarSistema(){
 
 
     /* =================================================
-       REFERENCIA
+       CARGAR TODOS LOS EMPLEADOS
     ================================================= */
 
     estado.textContent =
-      'Cargando referencia facial...';
+      'Cargando referencias faciales...';
 
 
-    await cargarReferencia();
+    await cargarTodasLasReferencias();
 
 
     estado.textContent =
-      'Referencia cargada. Pulsa Iniciar cámara.';
+      'Referencias cargadas. Pulsa Iniciar cámara.';
 
 
     referencia.textContent =
-      'Referencia facial cargada: ' +
-      nombreEmpleado;
+      'Sistema preparado: ' +
+      empleados.length +
+      ' referencias faciales cargadas';
 
 
     btnCamara.disabled =
@@ -964,13 +1045,18 @@ async function iniciarSistema(){
 
 
     log(
+      'REFERENCIAS DISPONIBLES: ' +
+      empleados.length
+    );
+
+
+    log(
       'Pulsa "Iniciar cámara"'
     );
 
 
     log(
       '================================='
-
     );
 
   }
@@ -1013,18 +1099,18 @@ async function iniciarSistema(){
 
 
 /* =====================================================
-   CARGAR REFERENCIA
+   CARGAR TODAS LAS REFERENCIAS
 ===================================================== */
 
-async function cargarReferencia(){
+async function cargarTodasLasReferencias(){
 
   log(
-    'Solicitando fotografía a Apps Script...'
+    'Solicitando todas las referencias a Apps Script...'
   );
 
 
   const callback =
-    'referencia_' +
+    'referencias_' +
     Date.now();
 
 
@@ -1057,17 +1143,17 @@ async function cargarReferencia(){
 
             reject(
               new Error(
-                'Tiempo de espera agotado al conectar con Apps Script.'
+                'Tiempo de espera agotado al cargar las referencias.'
               )
             );
 
           },
-          30000
+          60000
         );
 
 
       window[callback] =
-      function(respuesta){
+      async function(respuesta){
 
         if(
           terminado
@@ -1090,7 +1176,7 @@ async function cargarReferencia(){
         try{
 
           log(
-            'RESPUESTA DE REFERENCIA RECIBIDA'
+            'RESPUESTA DE REFERENCIAS RECIBIDA'
           );
 
 
@@ -1117,130 +1203,171 @@ async function cargarReferencia(){
           }
 
 
-          nombreEmpleado =
-            respuesta.nombre ||
-            CODIGO_EMPLEADO;
-
-
-          log(
-            'EMPLEADO: ' +
-            nombreEmpleado
-          );
-
-
           if(
-            !respuesta.base64
+            !Array.isArray(
+              respuesta.empleados
+            )
           ){
 
             throw new Error(
-              'No se recibió la fotografía Base64.'
+              'No se recibió la lista de empleados.'
             );
 
           }
 
 
           log(
-            'BASE64 RECIBIDO: ' +
-            respuesta.base64.length +
-            ' caracteres'
+            'EMPLEADOS RECIBIDOS: ' +
+            respuesta.empleados.length
           );
 
 
-          const img =
-            new Image();
+          empleados =
+            [];
 
 
-          img.onload =
-          async function(){
-
-            try{
-
-              log(
-                'IMAGEN DE REFERENCIA CARGADA'
-              );
+          descriptoresEmpleados =
+            [];
 
 
-              const deteccion =
-                await faceapi
-                .detectSingleFace(
-                  img,
-                  new faceapi.TinyFaceDetectorOptions({
+          /* =============================================
+             PROCESAR CADA EMPLEADO
+          ============================================= */
 
-                    inputSize:
-                      416,
+          for(
+            let i = 0;
+            i < respuesta.empleados.length;
+            i++
+          ){
 
-                    scoreThreshold:
-                      0.35
-
-                  })
-                )
-                .withFaceLandmarks()
-                .withFaceDescriptor();
+            const empleado =
+              respuesta.empleados[i];
 
 
-              if(
-                !deteccion
-              ){
-
-                throw new Error(
-                  'No se encontró rostro en la foto de referencia.'
-                );
-
-              }
-
-
-              descriptorReferencia =
-                deteccion.descriptor;
-
-
-              log(
-                'DESCRIPTOR DE REFERENCIA CREADO'
-              );
-
-
-              log(
-                'DIMENSIÓN: ' +
-                descriptorReferencia.length
-              );
-
-
-              log(
-                'REFERENCIA FACIAL OK'
-              );
-
-
-              resolve();
-
-            }
-
-            catch(error){
-
-              reject(
-                error
-              );
-
-            }
-
-          };
-
-
-          img.onerror =
-          function(){
-
-            reject(
-              new Error(
-                'No se pudo cargar la imagen de referencia.'
-              )
+            log(
+              'Procesando referencia ' +
+              (i + 1) +
+              '/' +
+              respuesta.empleados.length
             );
 
-          };
+
+            if(
+              !empleado.base64
+            ){
+
+              log(
+                'Referencia sin fotografía. Se omite.'
+              );
 
 
-          img.src =
-            'data:' +
-            respuesta.tipo +
-            ';base64,' +
-            respuesta.base64;
+              continue;
+
+            }
+
+
+            const img =
+              await cargarImagenBase64(
+                empleado.tipo,
+                empleado.base64
+              );
+
+
+            const deteccion =
+              await faceapi
+              .detectSingleFace(
+                img,
+                new faceapi.TinyFaceDetectorOptions({
+
+                  inputSize:
+                    416,
+
+                  scoreThreshold:
+                    0.35
+
+                })
+              )
+              .withFaceLandmarks()
+              .withFaceDescriptor();
+
+
+            if(
+              !deteccion
+            ){
+
+              log(
+                'No se encontró rostro en una referencia. Se omite.'
+              );
+
+
+              continue;
+
+            }
+
+
+            empleados.push({
+
+              codigo:
+                empleado.codigo,
+
+              nombre:
+                empleado.nombre,
+
+              descriptor:
+                deteccion.descriptor
+
+            });
+
+
+            descriptoresEmpleados.push({
+
+              codigo:
+                empleado.codigo,
+
+              nombre:
+                empleado.nombre,
+
+              descriptor:
+                deteccion.descriptor
+
+            });
+
+
+            log(
+              'REFERENCIA FACIAL PROCESADA CORRECTAMENTE'
+            );
+
+          }
+
+
+          if(
+            descriptoresEmpleados.length === 0
+          ){
+
+            throw new Error(
+              'No se pudo crear ningún descriptor facial.'
+            );
+
+          }
+
+
+          log(
+            '================================='
+          );
+
+
+          log(
+            'DESCRIPTORES LISTOS: ' +
+            descriptoresEmpleados.length
+          );
+
+
+          log(
+            '================================='
+          );
+
+
+          resolve();
 
         }
 
@@ -1269,11 +1396,7 @@ async function cargarReferencia(){
 
       script.src =
         SCRIPT_URL +
-        '?accion=obtenerReferencia' +
-        '&codigo=' +
-        encodeURIComponent(
-          CODIGO_EMPLEADO
-        ) +
+        '?accion=obtenerTodasLasReferencias' +
         '&callback=' +
         encodeURIComponent(
           callback
@@ -1306,7 +1429,7 @@ async function cargarReferencia(){
 
         reject(
           new Error(
-            'No se pudo conectar con Apps Script al obtener la referencia.'
+            'No se pudo conectar con Apps Script al obtener las referencias.'
           )
         );
 
@@ -1316,6 +1439,59 @@ async function cargarReferencia(){
       document.body.appendChild(
         script
       );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CARGAR IMAGEN BASE64
+===================================================== */
+
+function cargarImagenBase64(
+  tipo,
+  base64
+){
+
+  return new Promise(
+    function(resolve,reject){
+
+      const img =
+        new Image();
+
+
+      img.onload =
+      function(){
+
+        resolve(
+          img
+        );
+
+      };
+
+
+      img.onerror =
+      function(){
+
+        reject(
+          new Error(
+            'No se pudo cargar una imagen de referencia.'
+          )
+        );
+
+      };
+
+
+      img.src =
+        'data:' +
+        (
+          tipo ||
+          'image/jpeg'
+        ) +
+        ';base64,' +
+        base64;
 
     }
   );
@@ -1471,11 +1647,13 @@ async function iniciarCamara(){
     faceapi.matchDimensions(
       canvas,
       {
+
         width:
           video.videoWidth,
 
         height:
           video.videoHeight
+
       }
     );
 
@@ -1568,7 +1746,7 @@ async function detectar(){
 
   if(
     !camaraActiva ||
-    !descriptorReferencia
+    descriptoresEmpleados.length === 0
   ){
 
     setTimeout(
@@ -1647,6 +1825,10 @@ async function detectar(){
       resultados.length;
 
 
+    /* =================================================
+       NINGÚN ROSTRO
+    ================================================= */
+
     if(
       resultados.length === 0
     ){
@@ -1656,6 +1838,10 @@ async function detectar(){
 
 
       ultimaDistancia =
+        null;
+
+
+      empleadoIdentificado =
         null;
 
 
@@ -1669,6 +1855,55 @@ async function detectar(){
 
     }
 
+
+    /* =================================================
+       MÁS DE UN ROSTRO
+    ================================================= */
+
+    else if(
+      resultados.length > 1
+    ){
+
+      coincidenciasConsecutivas =
+        0;
+
+
+      empleadoIdentificado =
+        null;
+
+
+      faceapi.draw.drawDetections(
+        canvas,
+        resultados
+      );
+
+
+      faceapi.draw.drawFaceLandmarks(
+        canvas,
+        resultados
+      );
+
+
+      estado.textContent =
+        'Se detectaron varios rostros. Solo debe aparecer una persona.';
+
+
+      log(
+        'MÚLTIPLES ROSTROS DETECTADOS: ' +
+        resultados.length
+      );
+
+
+      log(
+        'REGISTRO BLOQUEADO POR SEGURIDAD'
+      );
+
+    }
+
+
+    /* =================================================
+       UN SOLO ROSTRO
+    ================================================= */
 
     else{
 
@@ -1694,27 +1929,79 @@ async function detectar(){
         resultados[0];
 
 
-      const distancia =
-        faceapi.euclideanDistance(
-          descriptorReferencia,
-          rostro.descriptor
-        );
+      /**
+       * =================================================
+       * COMPARAR CONTRA TODOS
+       * =================================================
+       */
+
+      let mejorCoincidencia =
+        null;
+
+
+      let menorDistancia =
+        Infinity;
+
+
+      for(
+        let i = 0;
+        i < descriptoresEmpleados.length;
+        i++
+      ){
+
+        const referenciaEmpleado =
+          descriptoresEmpleados[i];
+
+
+        const distancia =
+          faceapi.euclideanDistance(
+            referenciaEmpleado.descriptor,
+            rostro.descriptor
+          );
+
+
+        if(
+          distancia <
+          menorDistancia
+        ){
+
+          menorDistancia =
+            distancia;
+
+
+          mejorCoincidencia =
+            referenciaEmpleado;
+
+        }
+
+      }
 
 
       ultimaDistancia =
-        distancia;
+        menorDistancia;
 
 
       log(
-        'DISTANCIA: ' +
-        distancia.toFixed(4)
+        'MEJOR DISTANCIA: ' +
+        menorDistancia.toFixed(4)
       );
 
 
+      /**
+       * =================================================
+       * COINCIDENCIA
+       * =================================================
+       */
+
       if(
-        distancia <
+        mejorCoincidencia &&
+        menorDistancia <
         UMBRAL
       ){
+
+        empleadoIdentificado =
+          mejorCoincidencia;
+
 
         coincidenciasConsecutivas++;
 
@@ -1736,6 +2023,11 @@ async function detectar(){
 
 
         log(
+          'EMPLEADO IDENTIFICADO'
+        );
+
+
+        log(
           'PROGRESO: ' +
           coincidenciasConsecutivas +
           '/' +
@@ -1744,11 +2036,17 @@ async function detectar(){
 
 
         estado.textContent =
-          'Rostro coincidente ' +
+          'Rostro identificado. Confirmando ' +
           coincidenciasConsecutivas +
           '/' +
           COINCIDENCIAS_NECESARIAS;
 
+
+        /**
+         * =================================================
+         * IDENTIDAD CONFIRMADA
+         * =================================================
+         */
 
         if(
           coincidenciasConsecutivas >=
@@ -1796,10 +2094,19 @@ async function detectar(){
 
       }
 
+
+      /* =================================================
+         NO COINCIDE
+      ================================================= */
+
       else{
 
         coincidenciasConsecutivas =
           0;
+
+
+        empleadoIdentificado =
+          null;
 
 
         log(
@@ -1865,6 +2172,19 @@ async function registrarAsistencia(){
     log(
       'REGISTRO YA EN PROCESO. SOLICITUD IGNORADA.'
     );
+
+
+    return;
+
+  }
+
+
+  if(
+    !empleadoIdentificado
+  ){
+
+    registroRealizado =
+      false;
 
 
     return;
@@ -1951,7 +2271,7 @@ async function registrarAsistencia(){
       await enviarRegistro({
 
         empleado:
-          nombreEmpleado,
+          empleadoIdentificado.nombre,
 
         foto:
           foto,
@@ -1992,7 +2312,7 @@ async function registrarAsistencia(){
         {
 
           empleado:
-            nombreEmpleado,
+            empleadoIdentificado.nombre,
 
           foto:
             foto,
@@ -2015,6 +2335,7 @@ async function registrarAsistencia(){
 
       },
 
+
       async function(error){
 
         log(
@@ -2027,7 +2348,7 @@ async function registrarAsistencia(){
         {
 
           empleado:
-            nombreEmpleado,
+            empleadoIdentificado.nombre,
 
           foto:
             foto,
@@ -2043,6 +2364,7 @@ async function registrarAsistencia(){
         );
 
       },
+
 
       {
 
@@ -2087,11 +2409,13 @@ async function registrarAsistencia(){
 
 
 /* =====================================================
-   ENVIAR REGISTRO A APPS SCRIPT
+   ENVIAR REGISTRO
    POST + IFRAME
 ===================================================== */
 
-function enviarRegistro(datos){
+function enviarRegistro(
+  datos
+){
 
   return new Promise(
     function(resolve){
@@ -2214,8 +2538,7 @@ function enviarRegistro(datos){
 
 
       log(
-        'EMPLEADO: ' +
-        datos.empleado
+        'EMPLEADO IDENTIFICADO CORRECTAMENTE'
       );
 
 
