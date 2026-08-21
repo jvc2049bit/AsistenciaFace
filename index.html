@@ -2171,6 +2171,7 @@ async function detectar(){
 
 /* =====================================================
    REGISTRAR ASISTENCIA
+   MODO ESTRICTO GPS
 ===================================================== */
 
 async function registrarAsistencia(){
@@ -2191,7 +2192,6 @@ async function registrarAsistencia(){
     registroRealizado =
       false;
 
-
     return;
 
   }
@@ -2203,6 +2203,10 @@ async function registrarAsistencia(){
 
   try{
 
+    /* =================================================
+       IDENTIDAD CONFIRMADA
+    ================================================= */
+
     estado.textContent =
       'Identidad confirmada. Capturando fotografía...';
 
@@ -2210,6 +2214,36 @@ async function registrarAsistencia(){
     estadoCamara.textContent =
       'Capturando registro...';
 
+
+    log(
+      '================================='
+    );
+
+
+    log(
+      'IDENTIDAD CONFIRMADA'
+    );
+
+
+    log(
+      'EMPLEADO: ' +
+      empleadoIdentificado.nombre
+    );
+
+
+    log(
+      'MODO GPS: ESTRICTO'
+    );
+
+
+    log(
+      '================================='
+    );
+
+
+    /* =================================================
+       CAPTURAR FOTOGRAFÍA
+    ================================================= */
 
     log(
       'CAPTURANDO FOTOGRAFÍA...'
@@ -2264,16 +2298,8 @@ async function registrarAsistencia(){
     );
 
 
-    estado.textContent =
-      'Obteniendo ubicación GPS...';
-
-
-    estadoCamara.textContent =
-      'Obteniendo ubicación...';
-
-
     /* =================================================
-       GPS
+       VERIFICAR GEOLOCALIZACIÓN
     ================================================= */
 
     if(
@@ -2281,22 +2307,39 @@ async function registrarAsistencia(){
     ){
 
       log(
-        'GPS NO DISPONIBLE'
+        '================================='
       );
 
 
-      await enviarRegistro({
+      log(
+        'GPS NO DISPONIBLE EN ESTE DISPOSITIVO'
+      );
 
-        empleado:
-          empleadoIdentificado.nombre,
 
-        foto:
-          foto,
+      log(
+        'REGISTRO BLOQUEADO'
+      );
 
-        observacion:
-          'Registro biométrico automático - GPS no disponible'
 
-      });
+      log(
+        '================================='
+      );
+
+
+      estado.textContent =
+        'Ubicación requerida para registrar la asistencia.';
+
+
+      estadoCamara.textContent =
+        'Activa el GPS y permite el acceso a la ubicación.';
+
+
+      enviandoRegistro =
+        false;
+
+
+      registroRealizado =
+        false;
 
 
       return;
@@ -2304,84 +2347,283 @@ async function registrarAsistencia(){
     }
 
 
+    /* =================================================
+       SOLICITAR GPS
+    ================================================= */
+
+    estado.textContent =
+      'Obteniendo ubicación GPS...';
+
+
+    estadoCamara.textContent =
+      'Espera mientras obtenemos tu ubicación.';
+
+
+    log(
+      'SOLICITANDO UBICACIÓN GPS...'
+    );
+
+
     navigator.geolocation.getCurrentPosition(
 
       async function(pos){
 
-        log(
-          'GPS OBTENIDO'
-        );
+        try{
+
+          /* =============================================
+             GPS OBTENIDO
+          ============================================= */
+
+          const lat =
+            pos.coords.latitude;
 
 
-        log(
-          'LATITUD: ' +
-          pos.coords.latitude
-        );
+          const lng =
+            pos.coords.longitude;
 
 
-        log(
-          'LONGITUD: ' +
-          pos.coords.longitude
-        );
+          const precision =
+            pos.coords.accuracy;
 
 
-        const datos =
-        {
-
-          empleado:
-            empleadoIdentificado.nombre,
-
-          foto:
-            foto,
-
-          lat:
-            pos.coords.latitude,
-
-          lng:
-            pos.coords.longitude,
-
-          observacion:
-            'Registro biométrico automático'
-
-        };
+          log(
+            '================================='
+          );
 
 
-        await enviarRegistro(
-          datos
-        );
+          log(
+            'GPS OBTENIDO CORRECTAMENTE'
+          );
+
+
+          log(
+            'LATITUD: ' +
+            lat
+          );
+
+
+          log(
+            'LONGITUD: ' +
+            lng
+          );
+
+
+          log(
+            'PRECISIÓN: ' +
+            precision +
+            ' metros'
+          );
+
+
+          log(
+            '================================='
+          );
+
+
+          estado.textContent =
+            'Ubicación obtenida. Registrando asistencia...';
+
+
+          estadoCamara.textContent =
+            'Guardando asistencia con GPS...';
+
+
+          /* =============================================
+             PREPARAR DATOS
+          ============================================= */
+
+          const datos =
+          {
+
+            empleado:
+              empleadoIdentificado.nombre,
+
+            foto:
+              foto,
+
+            lat:
+              lat,
+
+            lng:
+              lng,
+
+            observacion:
+              'Registro biométrico automático - GPS confirmado'
+
+          };
+
+
+          log(
+            'REGISTRO CON GPS CONFIRMADO'
+          );
+
+
+          log(
+            'ENVIANDO ASISTENCIA...'
+          );
+
+
+          /* =============================================
+             ENVIAR REGISTRO
+          ============================================= */
+
+          await enviarRegistro(
+            datos
+          );
+
+        }
+
+        catch(error){
+
+          log(
+            'ERROR PROCESANDO GPS: ' +
+            error.message
+          );
+
+
+          estado.textContent =
+            'No se pudo completar el registro.';
+
+
+          estadoCamara.textContent =
+            error.message;
+
+
+          registroRealizado =
+            false;
+
+
+          enviandoRegistro =
+            false;
+
+        }
 
       },
 
 
-      async function(error){
+      function(error){
+
+        /* =============================================
+           GPS NO OBTENIDO
+        ============================================= */
 
         log(
-          'GPS NO DISPONIBLE: ' +
+          '================================='
+        );
+
+
+        log(
+          'GPS NO DISPONIBLE'
+        );
+
+
+        log(
+          'CÓDIGO ERROR GPS: ' +
+          error.code
+        );
+
+
+        log(
+          'MENSAJE GPS: ' +
           error.message
         );
 
 
-        const datos =
-        {
-
-          empleado:
-            empleadoIdentificado.nombre,
-
-          foto:
-            foto,
-
-          observacion:
-            'Registro biométrico automático - GPS no disponible'
-
-        };
-
-
-        await enviarRegistro(
-          datos
+        log(
+          'REGISTRO BLOQUEADO'
         );
+
+
+        log(
+          '================================='
+        );
+
+
+        let mensaje =
+          'No se pudo obtener la ubicación.';
+
+
+        let mensajeCamara =
+          'Activa el GPS y permite el acceso a la ubicación.';
+
+
+        /* =============================================
+           CÓDIGOS DE ERROR GEOLOCATION
+        ============================================= */
+
+        if(
+          error.code === 1
+        ){
+
+          mensaje =
+            'Permiso de ubicación requerido.';
+
+
+          mensajeCamara =
+            'Permite el acceso a tu ubicación para registrar.';
+
+        }
+
+
+        else if(
+          error.code === 2
+        ){
+
+          mensaje =
+            'No se pudo determinar tu ubicación.';
+
+
+          mensajeCamara =
+            'Verifica que el GPS esté activado.';
+
+        }
+
+
+        else if(
+          error.code === 3
+        ){
+
+          mensaje =
+            'Tiempo agotado obteniendo ubicación.';
+
+
+          mensajeCamara =
+            'Muévete a un lugar con mejor señal GPS e inténtalo nuevamente.';
+
+        }
+
+
+        estado.textContent =
+          mensaje;
+
+
+        estadoCamara.textContent =
+          mensajeCamara;
+
+
+        /*
+         * IMPORTANTE:
+         *
+         * NO se llama enviarRegistro().
+         *
+         * Por lo tanto NO se crea ninguna fila
+         * en la hoja Asistencia.
+         */
+
+
+        registroRealizado =
+          false;
+
+
+        enviandoRegistro =
+          false;
 
       },
 
+
+      /* =================================================
+         CONFIGURACIÓN GPS
+      ================================================= */
 
       {
 
@@ -2389,7 +2631,7 @@ async function registrarAsistencia(){
           true,
 
         timeout:
-          10000,
+          15000,
 
         maximumAge:
           0
@@ -2411,7 +2653,7 @@ async function registrarAsistencia(){
 
 
     estado.textContent =
-      'Error registrando asistencia.';
+      'Error preparando el registro.';
 
 
     estadoCamara.textContent =
