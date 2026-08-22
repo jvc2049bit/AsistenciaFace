@@ -2431,24 +2431,25 @@ async function registrarAsistencia(){
           ============================================= */
 
           const datos =
-          {
+{
+  codigo:
+    empleadoIdentificado.codigo,
 
-            empleado:
-              empleadoIdentificado.nombre,
+  empleado:
+    empleadoIdentificado.nombre,
 
-            foto:
-              foto,
+  foto:
+    foto,
 
-            lat:
-              lat,
+  lat:
+    lat,
 
-            lng:
-              lng,
+  lng:
+    lng,
 
-            observacion:
-              'Registro biométrico automático - GPS confirmado'
-
-          };
+  observacion:
+    'Registro biométrico automático - GPS confirmado'
+};
 
 
           log(
